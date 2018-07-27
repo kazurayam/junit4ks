@@ -62,11 +62,11 @@ The `Epilogue` is poor and still to be developed. All it does is to print `Run:1
 
 Eclipse surely equips feature to render the JUnit result in GUI. But I would not be able to make use of it.
 
-### I need multiple 'src' directory
+### I need multiple 'src' directories
 
-In a Java project in Eclipse, you can make 2 or more directories to store program sources codes: one called '`main`', another called '`test`' for example. In the `src/main` directory I will have `junittutorial` package for application classes. In the '`src/test`' directory I will have the same package `junittutorial` for test classes. With this file tree I can put allication classes and test classes in a single package. Simple namespace is always prefered.
+In a Java project in Eclipse, you can make 2 or more directories to store program sources codes. For example, one called '`src/main`', another called '`src/test`'. In the `src/main` directory, I will have `junittutorial` package for application classes. In the '`src/test`' directory, I will have the same package `junittutorial` for test classes. With this file tree I can put the application classes and the test classes in a single Java `package`. Simple package namespace is always prefered.
 
-However in Katalon Studio, the `Keywords` directory is the only src directory where I could put Groovy source codes. I had to put both of application and test classes together in `Keywords`. Therefore I had to bring the test classes into another package `junittutorial.test`. Needless complication of namespace looks dirty to me.
+However in Katalon Studio, the `Keywords` directory is the only 1 directory where I could put Groovy source codes. I had to put both of application and test classes together in `Keywords`. Having these two kinds of classes together in a physizal directory is very messy. Therefore I had to make another package `junittutorial.test`. I don't like this, but I had to.
 
 ### Force compiling Groovy scripts in `Keywords` directory
 
