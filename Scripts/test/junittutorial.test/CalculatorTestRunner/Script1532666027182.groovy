@@ -9,12 +9,12 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import junittutorial.test.CalculatorTest
 
 // force compile Keywords
-WebUI.callTestCase(findTestCase('test/junittutorial.test/Prologue'), [:],
+WebUI.callTestCase(findTestCase('test/Prologue'), [:],
 	FailureHandling.CONTINUE_ON_FAILURE)
 
 // run CalculatorTest
 Result result = JUnitCore.runClasses(CalculatorTest.class)
 
 // print test result
-WebUI.callTestCase(findTestCase('test/junittutorial.test/Epilogue'), ['result':result],
+WebUI.callTestCase(findTestCase('test/Epilogue'), ['result':result],
 	FailureHandling.CONTINUE_ON_FAILURE)
