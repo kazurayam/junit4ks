@@ -45,7 +45,7 @@ OK, all I need to know is where to locate test classes, how to activate the runn
 
 ## Design
 
-Read the source codes, please. You will find everything you need to know there.
+Read the source codes, please. A real Java/Groovy programmer will find everything needed to run JUnit in Katalon Studio there.
 
 ## Outstanding issues
 
