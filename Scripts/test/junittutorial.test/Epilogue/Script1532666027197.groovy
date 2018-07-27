@@ -6,14 +6,15 @@ import org.junit.runner.Description
 
 WebUI.comment("Run:${result.getRunCount()}, Failure:${result.getFailureCount()}, Ignored:${result.getIgnoreCount()}")
 
+StringBuilder sb = new StringBuilder()
 List<Failure> failures = result.getFailures()
-for (Failure failure : failures) {
-	StringBuilder sb = new StringBuilder()
+for (Failure failure : failures) {	
 	sb.append(failure.getDescription().getDisplayName() + "\n")
 	sb.append(failure.getMessage() + "\n")
 	//sb.append(failure.getTrace() + "\n")
-	WebUI.comment(sb.toString())
+	sb.append('-' * 80)
 }
+WebUI.comment(sb.toString())
 
 if (result.getFailureCount() > 0) {
 	KeywordUtil.markFailed("${result.getFailureCount()} test${result.getFailureCount() > 1 ? 's' : ''} failed")
