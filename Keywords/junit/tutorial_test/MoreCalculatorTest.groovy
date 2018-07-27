@@ -1,9 +1,11 @@
-package junit.tutorial
+package junit.tutorial_test
 
 import static org.hamcrest.CoreMatchers.*
 import static org.junit.Assert.*
 
 import org.junit.Test
+
+import junit.tutorial.Calculator
 
 class MoreCalculatorTest {
 
@@ -14,5 +16,4 @@ class MoreCalculatorTest {
 		float actual = calc.divide(3, 2)
 		assertThat(actual, is(expected))
 	}
-
 }

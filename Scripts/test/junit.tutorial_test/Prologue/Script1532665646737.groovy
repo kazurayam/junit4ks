@@ -26,10 +26,10 @@ import internal.GlobalVariable as GlobalVariable
  * @author kazurayam
  */
 def classNames = [
-	'junit.tutorial.AllTests',
 	'junit.tutorial.Calculator',
-	'junit.tutorial.CalculatorTest',
-	'junit.tutorial.MoreCalculatorTest'
+	'junit.tutorial_test.AllTests',
+	'junit.tutorial_test.CalculatorTest',
+	'junit.tutorial_test.MoreCalculatorTest'
 ]
 
 for (String className : classNames) {
