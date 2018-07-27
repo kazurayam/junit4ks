@@ -1,4 +1,4 @@
-package junit.tutorial
+package junittutorial
 
 class Calculator {
 

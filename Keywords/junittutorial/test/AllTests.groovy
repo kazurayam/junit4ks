@@ -1,4 +1,4 @@
-package junit.tutorial_test
+package junittutorial.test
 
 import org.junit.runner.RunWith
 import org.junit.runners.Suite
