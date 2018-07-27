@@ -30,12 +30,13 @@ OK, all I need to know is where to locate test classes, how to activate the runn
 3. You will see the following project structure: ![TestsExplorer](https://github.com/kazurayam/RunningJUnitInKatalonStudio/blob/master/docs/TestsExplorer.PNG)
 4. Try to load `Test Cases/test/junittutorial.test/CalculatorTestRunner`
 5. Run the test case specifying any Browser (it won't open browser anyway)
-6. This will succeed. In the Console you will find message from `CalculateTestRunner` as follows:
+6. `CalculateTestRunner` activates the JUnit test runner. It executes junit test cases stored in the `Keywords/junittutorial/test` directory. These junit test cases verify against the Groovy classes under the `Keywords/junittutorial` directory.
+7. `CalculateTestRunner` will succeed. In the Console you will find message from `CalculateTestRunner` as follows:
 ```
 07-27-2018 02:42:13 PM - [INFO]   - Run:1, Failure:0, Ignored:0
 ```
-7. Let's try another test case `Test Cases/test/junittutorial.test/AllTestsRunner`. Load and run it.
-8. This will fail. In the Console you will find message from `AllTestsRunner` as follows:
+8. Let's try another test case `Test Cases/test/junittutorial.test/AllTestsRunner`. Load and run it.
+9. This will fail. In the Console you will find message from `AllTestsRunner` as follows:
 ```
 07-27-2018 02:46:45 PM - [INFO]   - Run:2, Failure:1, Ignored:0
 ...
