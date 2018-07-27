@@ -7,21 +7,21 @@ by kazurayam
 
 This is a simple [Katalon Studio](https://www.katalon.com/) project for demonstration purpose. You can check this out onto your PC and execute with your Katalon Studio. This demo was developed using Katalong Studio version 5.4.2
 
-This demo will show you: *you can run unit-tests with JUnit4 in Katalon Studio*.
+This demo will show you *how to run unit-tests with JUnit4 in Katalon Studio*.
 
 Are you delighted to here it? Then go on reading this. If you don't know what JUnit is, quit reading this. It's a waste of time for non programmers.
 
 ## Background
 
-I am going to develop a custom Keyword in a Katalon Studio project. See [a post in the Katalon forum](https://forum.katalon.com/discussion/comment/19738) for the background story. My custom keyword is expected to be fairly large, complicated, and therefore bug-prone. So I want to execute thorough unit-testing on my Groovy classes and methods with [JUnit4](https://junit.org/junit4/) in Katalon Studio.
+I am going to develop a custom Keyword in a Katalon Studio project. See [a post in the Katalon forum](https://forum.katalon.com/discussion/comment/19738) for the background story. My custom keyword is expected to be fairly large, complicated, and therefore bug-prone. I want to execute thorough unit-testing on my Groovy classes and methods with [JUnit4](https://junit.org/junit4/) in Katalon Studio.
 
-I was aware that the Katalon Studio's distribution zip file contains `plugins/org.junit_4.12.0.jar`. I tried a test case of single line:
+I was aware that the Katalon Studio's distributed zip file contains `plugins/org.junit_4.12.0.jar`. I tried a test case of single line:
 ```
 import org.junit.runner.JUnitCore
 ```
-This worked! I mean, import succeeded, no error emitted. I realized that the JUnit classes are available in the Katalon Studio's Java VM.
+This worked! The import statement succeeded. No error was emitted. I realized that the JUnit classes are available in the Katalon Studio's Java VM.
 
-OK, all I need to is to find out where to locate test classes, how to activate the runner, and how to report the result. I have done an experiment. I believe I have got a success.
+OK, all I need to know is where to locate test classes, how to activate the runner, and how to report the result. I have done an experiment. I believe I have got a success.
 
 ## How to run the demo
 
@@ -69,6 +69,7 @@ However in Katalon Studio, the `Keywords` directory is the only src directory wh
 
 ### Force compiling Groovy scripts in `Keywords` directory
 
-I am not yet sure when and how the Groovy scripts in the `Keywords` directory compiled into \*.class files. It seemed that a script is compiled when I saved the source by editor. But I have ever encountered a case where Keywords are not compiled into \*.class file, and got strange errors.
+I am not sure when and how the Groovy scripts in the `Keywords` directory are compiled into \*.class files by Katalon Studio. It seemed that a script is compiled when I saved the source by editor. But I have ever encountered a case where Keywords are not compiled even when I edit and saved it.
 
+It seemd that a Keyword source will be dynamically compiled and loaded via [`CustomKeywords`](https://docs.katalon.com/display/KD/Custom+Keywords). The documentation is very poor. I am not quite sure. But I can guess by practical experiments. So I made a code to ensure dynamic compilation. 
 [`Test Cases/test/junittutorial.test/Prologue`](https://github.com/kazurayam/RunningJUnitInKatalonStudio/blob/master/Scripts/test/junittutorial.test/Prologue/Script1532666027229.groovy) ensures the Groovy scripts in the `Keywords` directory compiled by Groovy compiler before running tests.
