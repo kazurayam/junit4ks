@@ -19,7 +19,20 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUiBuiltInKe
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
-CustomKeywords.'junit.tutorial.AllTests.compileMe'()
-CustomKeywords.'junit.tutorial.Calculator.compileMe'()
-CustomKeywords.'junit.tutorial.CalculatorTest.compileMe'()
-CustomKeywords.'junit.tutorial.MoreCalculatorTest.compileMe'()
+/**
+ * This Groovy script makes sure Groovy source files in the Keyword directory
+ * compiled to classes files by Groovy compiler
+ * 
+ * @author kazurayam
+ */
+def classNames = [
+	'junit.tutorial.AllTests',
+	'junit.tutorial.Calculator',
+	'junit.tutorial.CalculatorTest',
+	'junit.tutorial.MoreCalculatorTest'
+]
+
+for (String className : classNames) {
+	def name = CustomKeywords."${className}.getClass"().getName()
+	WebUI.comment("${name} is compiled")
+}

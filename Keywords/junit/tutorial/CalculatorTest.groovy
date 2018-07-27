@@ -14,6 +14,5 @@ class CalculatorTest {
 		int actual = calc.multiply(3, 4)
 		assertThat(actual, is(expected))
 	}
-
-	void compileMe() {}
+	
 }

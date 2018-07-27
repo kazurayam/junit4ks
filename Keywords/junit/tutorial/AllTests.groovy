@@ -11,5 +11,4 @@ import org.junit.runners.Suite.SuiteClasses
 // please note. Difference of Groovy and Java here.
 // In Java, this will be written as @SuiteClasses({...}). Difference of Java and Groovy here.
 public class AllTests {
-	void compileMe() {}
 }

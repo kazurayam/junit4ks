@@ -10,8 +10,6 @@ class Calculator {
 		return x / y
 	}
 
-	void compileMe() {}
-
 	static void main(String[] args) {
 		println "Hello, I am a calculator."
 	}

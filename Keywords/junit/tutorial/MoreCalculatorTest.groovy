@@ -15,5 +15,4 @@ class MoreCalculatorTest {
 		assertThat(actual, is(expected))
 	}
 
-	void compileMe() {}
 }
