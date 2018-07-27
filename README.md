@@ -42,6 +42,33 @@ OK, all I need to is to find out where to locate test classes, how to activate t
 07-27-2018 02:46:45 PM - [FAILED] - Test Cases/test/junittutorial.test/AllTestsRunner FAILED because (of) 1 test failed
 ```
 
-## Description
+## Design
 
 Read the source codes, please. You will find everything you need to know there.
+
+## Outstanding issues
+
+### Reporting
+By the following code I could get the test result.
+```
+Result result = JUnitCore.runClasses(CalculatorTest.class)
+```
+I had to write a code to report the `result` in Katalon way. Therefore I wrote:
+```
+WebUI.callTestCase(findTestCase('test/junittutorial.test/Epilogue'), ['result':result])
+```
+The `Epilogue` is poor and still to be developed. All it does is to print `Run:1, Failure:0, Ignored:0` to console and mark Failure to inform Katalon Studio.
+
+Eclipse surely equips feature to render the JUnit result in GUI. But I would not be able to make use of it.
+
+### I need multiple 'src' directory
+
+In a Java project in Eclipse, you can make 2 or more directories to store program sources codes: one called '`main`', another called '`test`' for example. In the `src/main` directory I will have `junittutorial` package for application classes. In the '`src/test`' directory I will have the same package `junittutorial` for test classes. With this file tree I can put allication classes and test classes in a single package. Simple namespace is always prefered.
+
+However in Katalon Studio, the `Keywords` directory is the only src directory where I could put Groovy source codes. I had to put both of application and test classes together in `Keywords`. Therefore I had to bring the test classes into another package `junittutorial.test`. Needless complication of namespace looks dirty to me.
+
+### Force compiling Groovy scripts in `Keywords` directory
+
+I am not yet sure when and how the Groovy scripts in the `Keywords` directory compiled into \*.class files. It seemed that a script is compiled when I saved the source by editor. But I have ever encountered a case where Keywords are not compiled into \*.class file, and got strange errors.
+
+[`Test Cases/test/junittutorial.test/Prologue`](https://github.com/kazurayam/RunningJUnitInKatalonStudio/blob/master/Scripts/test/junittutorial.test/Prologue/Script1532666027229.groovy) ensures the Groovy scripts in the `Keywords` directory compiled by Groovy compiler before running tests.
