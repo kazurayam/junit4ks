@@ -44,4 +44,4 @@ OK, all I need to is to find out where to locate test classes, how to activate t
 
 ## Description
 
-Read the source codes, please. You find everything there.
+Read the source codes, please. You will find everything you need to know there.
