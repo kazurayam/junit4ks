@@ -9,7 +9,7 @@ This is a simple [Katalon Studio](https://www.katalon.com/) project for demonstr
 
 This demo will show you *how to run unit-tests with JUnit4 in Katalon Studio*.
 
-Are you delighted to here it? Then go on reading this. If you don't know what JUnit is, quit reading this. It's a waste of time for non programmers.
+Are you delighted to hear it? Then go on reading this. If you don't know what JUnit is for, quit reading as it would be waste of time for non Java/Groovy programmer.
 
 ## Background
 
@@ -72,5 +72,5 @@ However in Katalon Studio, the `Keywords` directory is the only 1 directory wher
 
 I am not sure when and how the Groovy scripts in the `Keywords` directory are compiled into \*.class files by Katalon Studio. It seemed that a script is compiled when I saved the source by editor. But I have ever encountered a case where Keywords are not compiled even when I edit and saved it.
 
-It seemd that a Keyword source will be dynamically compiled and loaded via [`CustomKeywords`](https://docs.katalon.com/display/KD/Custom+Keywords). The documentation is very poor. I am not quite sure. But I can guess by practical experiments. So I made a code to ensure dynamic compilation. 
+It seemd that a Keyword source will be dynamically compiled and loaded via [`CustomKeywords`](https://docs.katalon.com/display/KD/Custom+Keywords). The documentation is very poor. I am not quite sure. But I can guess by practical experiments. So I made a code to ensure dynamic compilation.
 [`Test Cases/test/Prologue`](https://github.com/kazurayam/RunningJUnitInKatalonStudio/blob/master/Scripts/test/Prologue/Script1532666027229.groovy) ensures the Groovy scripts in the `Keywords` directory compiled by Groovy compiler before running tests.
