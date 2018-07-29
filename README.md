@@ -60,7 +60,7 @@ WebUI.callTestCase(findTestCase('test/junittutorial.test/Epilogue'), ['result':r
 ```
 The `Epilogue` is poor and still to be developed. All it does is to print `Run:1, Failure:0, Ignored:0` to console and mark Failure to inform Katalon Studio.
 
-Eclipse surely equips feature to render the JUnit result in GUI. But I would not be able to make use of it.
+Eclipse surely equips feature to render the JUnit result in GUI. But I do not know how to utilize it.
 
 ### I need multiple 'src' directories
 
@@ -68,9 +68,11 @@ In a Java project in Eclipse, I can make 2 or more directories to store program 
 
 However in Katalon Studio, the `Keywords` directory is the only 1 directory where I could put Groovy source codes. I had to put both of application and test classes together in `Keywords`. Having these two kinds of classes together in a physical directory is very messy. Therefore I had to make another package `junittutorial.test`. I don't like this, but I had to.
 
+I would investigate it if I could have another src directory other than `Keywords`. I know Katalon Studio is based on Eclipse, then it should be possible, I think.
+
 ### Force compiling Groovy scripts in `Keywords` directory
 
-I am not sure when and how the Groovy scripts in the `Keywords` directory are compiled into \*.class files by Katalon Studio. It seemed that a script is compiled when I saved the source by editor. But I have ever encountered a case where Keywords are not compiled even when I edit and saved it.
+I am not yet sure when and how the Groovy scripts in the `Keywords` directory are compiled into \*.class files by Katalon Studio. It seemed that a script is compiled when I saved the source by editor. But I have ever encountered a case where Keywords are not compiled even when I edit and saved it.
 
 It seemd that a Keyword source will be dynamically compiled and loaded via [`CustomKeywords`](https://docs.katalon.com/display/KD/Custom+Keywords). The documentation is very poor. I am not quite sure. But I can guess by practical experiments. So I made a code to ensure dynamic compilation.
 [`Test Cases/test/Prologue`](https://github.com/kazurayam/RunningJUnitInKatalonStudio/blob/master/Scripts/test/Prologue/Script1532666027229.groovy) ensures the Groovy scripts in the `Keywords` directory compiled by Groovy compiler before running tests.
