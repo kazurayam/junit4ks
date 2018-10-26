@@ -11,6 +11,7 @@ class CalculatorTest {
 
 	@Test
 	void testMultiply() {
+		println ">>> Hello from CalculatorTest#testMultiply()"
 		Calculator calc = new Calculator()
 		int expected = 12
 		int actual = calc.multiply(3, 4)

@@ -2,6 +2,7 @@ import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 
 import org.junit.runner.JUnitCore
 import org.junit.runner.Result
+import org.junit.internal.TextListener
 
 import com.kms.katalon.core.util.KeywordUtil
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
@@ -14,7 +15,9 @@ WebUI.callTestCase(findTestCase('test/Prologue'), [:],
 	FailureHandling.CONTINUE_ON_FAILURE)
 
 // run AllTests
-Result result = JUnitCore.runClasses(AllTests.class)
+JUnitCore junit = new JUnitCore()
+junit.addListener(new TextListener(System.out))
+Result result = junit.run(AllTests.class)
 
 // print test result
 WebUI.callTestCase(findTestCase('test/Epilogue'), ['result':result],
