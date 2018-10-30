@@ -13,7 +13,7 @@ public class MyRunListener extends RunListener {
 	private long begin
 
 	public MyRunListener(int numberOfTestClass) {
-		this.setBegin(System.currentTimeMillis)
+		this.setBegin(System.currentTimeMillis())
 		this.numberOfTestClass = numberOfTestClass
 	}
 
