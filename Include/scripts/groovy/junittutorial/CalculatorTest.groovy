@@ -1,4 +1,4 @@
-package junittutorial.test
+package junittutorial
 
 import static org.hamcrest.CoreMatchers.*
 import static org.junit.Assert.*
@@ -13,8 +13,8 @@ class CalculatorTest {
 	void testMultiply() {
 		println ">>> Hello from CalculatorTest#testMultiply()"
 		Calculator calc = new Calculator()
-		int expected = 12
-		int actual = calc.multiply(3, 4)
+		int expected = 21
+		int actual = calc.multiply(7, 3)
 		assertThat(actual, is(expected))
 	}
 }
