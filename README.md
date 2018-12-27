@@ -34,16 +34,72 @@ The first attempt worked, but was too complicated. I wanted to find out an easie
 Dec 2018, devalex88 (Katalon Developer) proposed a new approach at https://forum.katalon.com/t/how-to-write-katalon-studio-tests-with-intellij-idea-and-other-ides/15940 .
 
 The idea includes:
-1. Since version 5.7.0, `.classpath` file in a Katalon Studio project contains the following line:
-```
-<classpathentry kind="src" output="bin/groovy" path="Include/scripts/groovy"/>
-```
-This line defines a build path acknowledged Katalon Studio(=Eclipse). All ` *.groovy` files located in this folder will be compiled (when saved) by the Groovy compiler in Katalon Studio.
-2. we will locate unit-testing classes in the `Include/scripts/groovy` folder.
-3. Open the project with Eclipse and run JUnit in Eclipse. Eclipse will look after activating the test runner and reporting the test results.
+1. Since version 5.7.0, `.classpath` file in a Katalon Studio project contains a line `<classpathentry kind="src" output="bin/groovy" path="Include/scripts/groovy"/>`. This line defines a build path acknowledged Katalon Studio(=Eclipse). All of `*.groovy` files located in this folder will be compiled (when saved) by the Groovy compiler in Katalon Studio.
+2. We will locate `*Test.groovy` files for unit-testing in the `Include/scripts/groovy` folder.
+3. We will use Eclipse to run JUnit. You can open a katalon project with Eclipse (not Katalon Studio)! The built-in feature of Eclipse will look after activating the JUnit tests and reporting the results.
 
 The following sections describe my second attempt.
 
 ## How to execute my custom keyword
 
+### Prerequisites
+
+1. Use Katalon Studio version 5.7.0 or higher
+2. You have [Eclipse IDE](https://www.eclipse.org/downloads/) installed
+3. Download the zip file of this project at [Releases](https://github.com/kazurayam/RunningJUnitInKatalonStudio/releases) page and unzip it
+
+### Custom Keyword
+
+I have made a custom keyword [`junittutorial.Calculator`](Keywords/junittutorial/Calculator.groovy)
+
+### Test Case
+
+I have made a Test Case [`TC1`](Scripts/TC1/Script1545891324676.groovy)
+
+### Executing the test Case
+
+When I execute the TC1, I got the following messages in the console:
+```
+...
+2 * 3 makes 6
+...
+6 / 3 makes 2
+...
+```
+The class `junittutorial.Calulator` is just working.
+
 ## How to run unit tests for my custom keyword
+
+### JUnit Test classes
+
+I have made 2 Groovy files as JUnit test:
+- [Include/scripts/groovy/junittutorial/CalculatorTest.groovy](Include/scripts/groovy/junittutorial/CalculatorTest.groovy)
+- [Include/scripts/groovy/junittutorial/MoreCalculatorTest.groovy](Include/scripts/groovy/junittutorial/MoreCalculatorTest.groovy)
+
+`CalculatorTest.groovy` looks like this:
+```
+package junittutorial
+
+import static org.hamcrest.CoreMatchers.*
+import static org.junit.Assert.*
+
+import org.junit.Test
+
+import junittutorial.Calculator
+
+class CalculatorTest {
+
+	@Test
+	void testMultiply() {
+		println ">>> Hello from CalculatorTest#testMultiply()"
+		Calculator calc = new Calculator()
+		int expected = 21
+		int actual = calc.multiply(7, 3)
+		assertThat(actual, is(expected))
+	}
+}
+```
+
+It is a typical, simple JUnit test case.
+
+### Runing junit tests in Eclipse
