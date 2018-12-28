@@ -6,7 +6,7 @@ by kazurayam
 ## What is this?
 
 This is a simple [Katalon Studio](https://www.katalon.com/) project for demonstration purpose. You can download the zip file from [Releases](https://github.com/kazurayam/RunningJUnitInKatalonStudio/releases) page, unzip it, open it with your Katalon Studio.
-
+http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=845354
 The first version was developed in April 2018 using Katalong Studio version 5.4.2, and later rewritten in December 2018 using version 5.10.0.
 
 This demo will show you how to run unit-tests using JUnit4 in Katalon Studio.
@@ -44,13 +44,15 @@ The following sections describe my second attempt.
 
 ### Prerequisites
 
-1. Use Katalon Studio version 5.7.0 or higher
-2. You have [Eclipse IDE](https://www.eclipse.org/downloads/) installed
-3. Download the zip file of this project at [Releases](https://github.com/kazurayam/RunningJUnitInKatalonStudio/releases) page and unzip it
+1. Use Katalon Studio version 5.7.0 or higher. I used v5.10.0.
+2. You have [Eclipse IDE](https://www.eclipse.org/downloads/) installed. I used Eclipse Photon June 2018
+3. Download the zip file of this project at [Releases](https://github.com/kazurayam/RunningJUnitInKatalonStudio/releases) page and unzip it.
 
 ### Custom Keyword
 
-I have made a custom keyword [`junittutorial.Calculator`](Keywords/junittutorial/Calculator.groovy)
+I have made some custom keywords:
+- [`nittutorial.Calculator`](Keywords/junittutorial/Calculator.groovy)
+- [``]
 
 ### Test Case
 
