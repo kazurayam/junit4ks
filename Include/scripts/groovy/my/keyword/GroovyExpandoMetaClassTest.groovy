@@ -5,9 +5,10 @@ import static org.junit.Assert.*
 
 import org.junit.Before
 import org.junit.Test
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 import com.kms.katalon.core.configuration.RunConfiguration
-
 /**
  * This test demonstrates how to use so called "ExpandoMetaClass" of Groovy language.
  * See http://groovy-lang.org/metaprogramming.html#metaprogramming_emc for detail.
@@ -27,18 +28,20 @@ import com.kms.katalon.core.configuration.RunConfiguration
  */
 class GroovyExpandoMetaClassTest {
 
+    static Logger logger_ = LoggerFactory.getLogger(GroovyExpandoMetaClassTest.class)
+
     private static final String PATH_X = "/Users/kazurayam/katalon-workspace/projectX"
- 
+
     @Before
     void setup() {
         RunConfiguration.metaClass.static.getProjectDir = { -> return PATH_X }
     }
 
-	@Test
-	void testExpandoMetaClass() {
-		String s = RunConfiguration.getProjectDir()
-		println "[testExpandoMetaClass] " + s
-		assertThat(s, is(PATH_X))
-	}
+    @Test
+    void testExpandoMetaClass() {
+        String s = RunConfiguration.getProjectDir()
+        logger_.info("[testExpandoMetaClass] RunConfiguration.getProjectDir()=" + s)
+        assertThat(s, is(PATH_X))
+    }
 
 }
