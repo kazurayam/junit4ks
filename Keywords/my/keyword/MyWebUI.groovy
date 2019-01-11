@@ -23,13 +23,13 @@ class MyWebUI {
 		if (executedBrowser == WebUIDriverType.CHROME_DRIVER) {
 			// open custom Chrome browser
 			System.setProperty('webdriver.chrome.driver', DriverFactory.getChromeDriverPath())
-            
-            // specify custom ChromeOptions
+
+			// specify custom ChromeOptions
 			ChromeOptions options = new ChromeOptions()
 			//options.addArguments("user-data-dir=/Users/qcq0264/Library/Application Support/Google/Chrome/Default")
 			WebDriver driver = new ChromeDriver(options)
-			
-            DriverFactory.changeWebDriver(driver)
+
+			DriverFactory.changeWebDriver(driver)
 		} else {
 			// open browser as usual
 			WebUI.openBrowser('')

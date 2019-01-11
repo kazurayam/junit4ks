@@ -2,9 +2,11 @@ package junittutorial
 
 import static org.hamcrest.CoreMatchers.*
 import static org.junit.Assert.*
-
+import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
 import org.junit.Test
 
+@RunWith(JUnit4.class)
 class MoreCalculatorTest {
 
 	@Test
