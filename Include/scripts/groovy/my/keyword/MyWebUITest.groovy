@@ -5,7 +5,7 @@ import static org.junit.Assert.*
 
 import org.junit.Test
 
-class MyWebUITest {
+public class MyWebUITest {
 
 	@Test
 	void testOpenBrowser() {
