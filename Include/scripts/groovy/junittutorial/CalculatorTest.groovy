@@ -16,9 +16,9 @@ class CalculatorTest {
 		int actual = Calculator.multiply(7, 3)
 		assertThat(actual, is(expected))
 	}
-	
+
 	@Test
-	void testDivide_notDouble() {
+	void testDivide_wrongType() {
 		double expected = 1.5f
 		double actual = Calculator.divide(3, 2)
 		assertThat(actual, is(not(expected)))
