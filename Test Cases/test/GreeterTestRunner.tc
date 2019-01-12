@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>MoreCalculatorTestRunner</name>
+   <name>GreeterTestRunner</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>0714e4bd-41ee-45b4-a3c7-cf8bed0dcca8</testCaseGuid>
+   <testCaseGuid>9f599729-7b66-45e1-9c6b-237a60f824d2</testCaseGuid>
 </TestCaseEntity>

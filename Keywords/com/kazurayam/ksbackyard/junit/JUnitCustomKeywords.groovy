@@ -74,28 +74,28 @@ public class JUnitCustomKeywords {
 	public static JUnitRunnerResult runWithJUnitRunner(Class junitRunnerClass) {
 		return runWithJUnitRunner(junitRunnerClass, RunConfiguration.getDefaultFailureHandling())
 	}
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * 
 	 * @author urayamakazuaki
 	 *
 	 */
 	public static interface JUnitRunnerResult {
-		
+
 		/**
 		 * @return passed or failed
 		 */
 		String getStatus()
-		
+
 		/**
 		 * Optional:
 		 * @return absolute path of generated junit report
 		 */
 		String getReportLocation()
-		
+
 		/**
 		 * Optional: Used when the keyword is {@link JUnitCustomKeywords#runWithJUnitRunner(Class)}
 		 * @return an instance of JUnit Result, null if the keyword is NOT
@@ -103,8 +103,8 @@ public class JUnitCustomKeywords {
 		 */
 		Result getJUnitRunnerResult()
 	}
-	
-	
+
+
 	/**
 	 * 
 	 * @author urayamakazuaki
@@ -114,32 +114,32 @@ public class JUnitCustomKeywords {
 		private String status
 		private String reportLocation
 		private Result result
-	
+
 		public JUnitRunnerResultImpl(String status, String reportLocation) {
 			this(status, reportLocation, null)
 		}
-	
+
 		public JUnitRunnerResultImpl(String status, String reportLocation, Result result) {
 			this.status = status
 			this.reportLocation = reportLocation
 			this.result = result
 		}
-	
+
 		@Override
 		public String getStatus() {
 			return status
 		}
-	
+
 		@Override
 		public String getReportLocation() {
 			return reportLocation
 		}
-	
+
 		@Override
 		public Result getJUnitRunnerResult() {
 			return result
 		}
-	
+
 		@Override
 		public String toString() {
 			return "JUnitRunnerResultImpl{"
@@ -149,5 +149,4 @@ public class JUnitCustomKeywords {
 			+ "}"
 		}
 	}
-	
 }
