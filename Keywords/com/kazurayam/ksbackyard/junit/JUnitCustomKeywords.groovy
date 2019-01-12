@@ -7,13 +7,11 @@ import org.junit.runner.JUnitCore
 import org.junit.runner.Result
 import org.junit.runner.notification.Failure
 
-import com.kazurayam.ksbackyard.junit.internal.JUnitRunnerResultImpl
 import com.kms.katalon.core.annotation.Keyword
 import com.kms.katalon.core.configuration.RunConfiguration
 import com.kms.katalon.core.keyword.internal.KeywordMain
 import com.kms.katalon.core.logging.KeywordLogger
 import com.kms.katalon.core.model.FailureHandling
-
 
 /**
  *
@@ -76,5 +74,80 @@ public class JUnitCustomKeywords {
 	public static JUnitRunnerResult runWithJUnitRunner(Class junitRunnerClass) {
 		return runWithJUnitRunner(junitRunnerClass, RunConfiguration.getDefaultFailureHandling())
 	}
+	
+	
+	
+	
+	/**
+	 * 
+	 * @author urayamakazuaki
+	 *
+	 */
+	public static interface JUnitRunnerResult {
 		
+		/**
+		 * @return passed or failed
+		 */
+		String getStatus()
+		
+		/**
+		 * Optional:
+		 * @return absolute path of generated junit report
+		 */
+		String getReportLocation()
+		
+		/**
+		 * Optional: Used when the keyword is {@link JUnitCustomKeywords#runWithJUnitRunner(Class)}
+		 * @return an instance of JUnit Result, null if the keyword is NOT
+		 * {@link JUnitBuiltinKeywords#runWithJUnitRunner(Class)}
+		 */
+		Result getJUnitRunnerResult()
+	}
+	
+	
+	/**
+	 * 
+	 * @author urayamakazuaki
+	 *
+	 */
+	public static class JUnitRunnerResultImpl implements JUnitRunnerResult {
+		private String status
+		private String reportLocation
+		private Result result
+	
+		public JUnitRunnerResultImpl(String status, String reportLocation) {
+			this(status, reportLocation, null)
+		}
+	
+		public JUnitRunnerResultImpl(String status, String reportLocation, Result result) {
+			this.status = status
+			this.reportLocation = reportLocation
+			this.result = result
+		}
+	
+		@Override
+		public String getStatus() {
+			return status
+		}
+	
+		@Override
+		public String getReportLocation() {
+			return reportLocation
+		}
+	
+		@Override
+		public Result getJUnitRunnerResult() {
+			return result
+		}
+	
+		@Override
+		public String toString() {
+			return "JUnitRunnerResultImpl{"
+			+ "status: " + status
+			+ ", reportLocation: " + reportLocation
+			+ ", junitRunnerResult: " + (result != null ? result.toString() : "null")
+			+ "}"
+		}
+	}
+	
 }
