@@ -1,27 +1,19 @@
 package com.kazurayam.ksbackyard.junit
 
-import com.kms.katalon.core.keyword.internal.KeywordMain
-import com.kms.katalon.core.configuration.RunConfiguration
+import java.text.MessageFormat
 
+import org.junit.runner.Computer
+import org.junit.runner.JUnitCore
+import org.junit.runner.Result
+import org.junit.runner.notification.Failure
 
-import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
-import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
-import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
-import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-
+import com.kazurayam.ksbackyard.junit.internal.JUnitRunnerResultImpl
 import com.kms.katalon.core.annotation.Keyword
-import com.kms.katalon.core.checkpoint.Checkpoint
-import com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords as CucumberKW
-import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
+import com.kms.katalon.core.configuration.RunConfiguration
+import com.kms.katalon.core.keyword.internal.KeywordMain
+import com.kms.katalon.core.logging.KeywordLogger
 import com.kms.katalon.core.model.FailureHandling
-import com.kms.katalon.core.testcase.TestCase
-import com.kms.katalon.core.testdata.TestData
-import com.kms.katalon.core.testobject.TestObject
-import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
-import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
-import internal.GlobalVariable
-import org.junit.runner.JUnitCore;
 
 /**
  *
@@ -32,17 +24,57 @@ import org.junit.runner.JUnitCore;
  */
 public class JUnitCustomKeywords {
 
+	private static final KeywordLogger logger = KeywordLogger.getInstance(JUnitCustomKeywords.class)
+
 	@Keyword
 	public static JUnitRunnerResult runWithJUnitRunner(Class junitRunnerClass, FailureHandling flowControl) {
 		return KeywordMain.runKeyword({
 			JUnitCore core = new JUnitCore()
-			// TODO
-		})	
+			Computer computer = new Computer()
+			Result result = core.run(computer, junitRunnerClass)
+			boolean runSuccess = result.wasSuccessful()
+			JUnitRunnerResultImpl junitResult = new JUnitRunnerResultImpl(
+					runSuccess ? 'passed' : 'failed', '', result)
+			if (runSuccess) {
+				logger.logPassed(MessageFormat.format("RunWith ''{0}'' was passed", junitRunnerClass.getName()))
+			} else {
+				List failuresDescriptions = []
+				for (Failure failure: result.getFailures()) {
+					failuresDescriptions.add(failure.getMessage())
+				}
+				KeywordMain.stepFailed(
+						MessageFormat.format("These following reason:\n {0}", failuresDescriptions),
+						flowControl)
+			}
+			return junitResult
+		}, flowControl, "Keyword runWithJUnitRunner failed")
 	}
-	
+
+	/**
+	 * Run the given <code>junitRunnerClass</code> that is annotated with
+	 * {@link JUnit} runner by invoke JUnit runner.
+	 * 
+	 * @param junitRunnerClass a class that is annotated with {@link JUnit} runner.
+	 * 
+	 * <p>
+	 * Example of <code>junitRunnerClass</code>:
+	 * <ul>
+	 * <li>
+	 * <pre>
+	 * import org.junit.runner.RunWith
+	 * import org.junit.runners.JUnit4
+	 * &#64;RunWith(JUnit4.class)
+	 * public class MyJunitRunner {}
+	 * 
+	 * </pre>
+	 * </li>
+	 * </ul>
+	 * </p>
+	 * @return
+	 */
 	@Keyword
 	public static JUnitRunnerResult runWithJUnitRunner(Class junitRunnerClass) {
-		return runWithJUnitRunner(junitRunnerClass,
-			RunConfiguration.getDefaultFailureHandling())
+		return runWithJUnitRunner(junitRunnerClass, RunConfiguration.getDefaultFailureHandling())
 	}
+		
 }

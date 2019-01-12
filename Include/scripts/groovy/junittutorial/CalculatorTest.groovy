@@ -14,7 +14,7 @@ class CalculatorTest {
 	void testMultiply() {
 		println ">>> Hello from CalculatorTest#testMultiply()"
 		Calculator calc = new Calculator()
-		int expected = 22
+		int expected = 21
 		int actual = calc.multiply(7, 3)
 		assertThat(actual, is(expected))
 	}
