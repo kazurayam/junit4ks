@@ -94,7 +94,8 @@ CustomKeywords.'com.kazurayam.ksbackyard.junit.JUnitCustomKeywords.runWithJUnitR
 You can run these test cases just as usual Katalon Studio test case.
 ![running a test case](docs/images/running_testcase.png)
 
-`runWithJUnitRunner` takes the `java.lang.Class` object of my JUnit-based test.
+When it finished, you can see the test result output in the Log Viewer and Console in Katalon Studio GUI.
+![testcase execution log](docs/images/testcase_execution_log.png)
 
 ### My JUnit-based tests
 
@@ -138,7 +139,7 @@ I developed this as a mimic of the  [`com.kms.katalon.core.cucumber.keyword.Cucu
 
 ## How to apply this method to your projects
 
-I your Katalon Studio project,
+In your Katalon Studio project, do the following:
 1. make a file `Keywords/com/kazurayam/ksbackyard/junit/JUnitCustomKeywords.groovy`
 2. Into it, copy and paste the code [`com.kazurayam.ksbackyard.junit.JUnitCustomKeywords`](Keywords/com/kazurayam/ksbackyard/junit/JUnitCustomKeywords.groovy), save it.
 3. make your JUnit test in `Include/scripts/groovy` folder. It would be something like [`Include/scripts/groovy/junittutorial/CalculatorTest.groovy`](Include/scripts/groovy/junittutorial/CalculatorTest.groovy)
