@@ -74,9 +74,9 @@ I have made some custom keyword classes. I want to test them using JUnit4:
 - [`junittutorial.Greeter`](Keywords/junittutorial/Greeter.groovy) --- this will say hello to someone you sepecified
 - [`com.example.MiniScreenshotDriver`](Keywords/com/example/MiniScreenshotDriver.groovy) --- taks entire-page screenshot of a URL and save PNG into file
 
-### Test Case
+### Test Cases
 
-I have made a few Test Cases in the ordinary `Test Cases` folder. These test cases run JUnit4 in Katalon Studio.
+I made a few Test Cases in the ordinary `<projectDir>/Test Cases` folder. These test cases run JUnit4 in Katalon Studio.
 - [`CalculatorTest`](Scripts/test/CalculatorTestRunner/Script1547192368406.groovy)
 - [`GreeterTestRunner`](Scripts/test/GreeterTestRunner/Script1547296768493.groovy)
 - [`AllCalculatorTestRunner`](Scripts/test/AllCalculatorTestRunner/Script1547284601981.groovy)
@@ -89,30 +89,22 @@ import com.example.MiniScreenshotDriverTest
 CustomKeywords.'com.kazurayam.ksbackyard.junit.JUnitCustomKeywords.runWithJUnitRunner'(MiniScreenshotDriverTest.class)
 ```
 
-It's very short, no mystery here.
+### How to run tests
 
+You can run these test cases just as usual Katalon Studio test case.
+![running a test case](docs/images/running_testcase.png)
 
-### Executing the test Case
+`runWithJUnitRunner` takes the `java.lang.Class` object of my JUnit-based test.
 
-When I execute the TC1, I got the following messages in the console:
-```
-...
-2 * 3 makes 6
-...
-6 / 3 makes 2
-...
-```
-The class `junittutorial.Calulator` is just working.
+### My JUnit-based tests
 
-## How to run unit tests for my custom keyword
+I made a few JUnit-based tests. I located them in the `<projectDir>/Include/scripts/groovy` folder.
+- [`junittutorial/CalculatorTest.groovy`](Include/scripts/groovy/junittutorial/CalculatorTest.groovy)
+- [`junittutorial/GreeterTest.groovy`](Include/scripts/groovy/junittutorial/GreeterTest.groovy)
+- [`com/example/MiniScreenshotDriverTest.groovy`](com/example/Include/scripts/groovy/com/example/MiniScreenshotDriverTest.groovy)
 
-### JUnit Test classes
+These test classes should be coded just as usual JUnit4 tests. For example, `junittutorial.GreeterTest` looks like this:
 
-I have made 2 Groovy files as JUnit test:
-- [Include/scripts/groovy/junittutorial/CalculatorTest.groovy](Include/scripts/groovy/junittutorial/CalculatorTest.groovy)
-- [Include/scripts/groovy/junittutorial/MoreCalculatorTest.groovy](Include/scripts/groovy/junittutorial/MoreCalculatorTest.groovy)
-
-`CalculatorTest.groovy` looks like this:
 ```
 package junittutorial
 
@@ -120,22 +112,35 @@ import static org.hamcrest.CoreMatchers.*
 import static org.junit.Assert.*
 
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
 
-import junittutorial.Calculator
+@RunWith(JUnit4.class)
+class GreeterTest {
 
-class CalculatorTest {
-
-	@Test
-	void testMultiply() {
-		println ">>> Hello from CalculatorTest#testMultiply()"
-		Calculator calc = new Calculator()
-		int expected = 21
-		int actual = calc.multiply(7, 3)
-		assertThat(actual, is(expected))
-	}
+    @Test
+    void testGreet() {
+        String expected = "Hello, world"
+        String actual = Greeter.greet("world")
+        assertThat(actual, is(expected))
+    }
 }
 ```
 
-It is a typical, simple JUnit test case.
+It's a plain old JUnit test.
+
+### Custom Keyword `runWithJUnitRunner` integrates JUnit with Katalon Studio
+
+`runWithJUnitRunner` keyword enables you to run your tests with JUnit4 in Katalon Studio. See the following source code:
+- [`com.kazurayam.ksbackyard.junit.JUnitCustomKeywords`](Keywords/com/kazurayam/ksbackyard/junit/JUnitCustomKeywords.groovy)
+
+I developed this as a mimic of the  [`com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords`](https://github.com/katalon-studio/katalon-studio-testing-framework/blob/master/Include/scripts/groovy/com/kms/katalon/core/cucumber/keyword/CucumberBuiltinKeywords.groovy) class.
 
 ## How to apply this method to your projects
+
+I your Katalon Studio project,
+1. make a file `Keywords/com/kazurayam/ksbackyard/junit/JUnitCustomKeywords.groovy`
+2. Into it, copy and paste the code [`com.kazurayam.ksbackyard.junit.JUnitCustomKeywords`](Keywords/com/kazurayam/ksbackyard/junit/JUnitCustomKeywords.groovy), save it.
+3. make your JUnit test in `Include/scripts/groovy` folder. It would be something like [`Include/scripts/groovy/junittutorial/CalculatorTest.groovy`](Include/scripts/groovy/junittutorial/CalculatorTest.groovy)
+4. make your Katalon Studio Testcase in `Test Cases` folder. It would be something like [`Test Cases/AllJunittutorialTestsRunner`](Scripts/test/AllJunittutorialTestsRunner/Script1547339195032.groovy)
+5. run your Katalon Studio Testcase by clicking `Run` button in Katalon Studio.
