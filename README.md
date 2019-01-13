@@ -53,7 +53,7 @@ In December 2018, I thought that I could test my Custom Keywords using the BDD f
 - [Step Definitions](https://docs.katalon.com/katalon-studio/docs/step-definitions.html)
 - [Running Cucumber Features file](https://docs.katalon.com/katalon-studio/docs/running-cucumber-features-file.html)
 
-It seemed that I could achieve what I wanted with it, but unfortunately I was blocked by a small defect in Katalon Studio:
+It seemed OK. I could nearly achieve what I wanted with it. But unfortunately I was blocked by a small defect in Katalon Studio:
 - [The Cucumber version bundled in Katalon Studio 5.10.1 is old, therefore sometimes throws exception](https://forum.katalon.com/t/poor-error-diagnostics-when-cucumber-feature-is-problematic/17474/8)
 
 I could not rely on Cucumber in Katalon Studio.
