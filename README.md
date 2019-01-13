@@ -106,7 +106,7 @@ When it finished, you can see the test result output in the Log Viewer and Conso
 I made a few JUnit-based tests. I located them in the `<projectDir>/Include/scripts/groovy` folder.
 - [`junittutorial/CalculatorTest.groovy`](Include/scripts/groovy/junittutorial/CalculatorTest.groovy)
 - [`junittutorial/GreeterTest.groovy`](Include/scripts/groovy/junittutorial/GreeterTest.groovy)
-- [`com/example/MiniScreenshotDriverTest.groovy`](com/example/Include/scripts/groovy/com/example/MiniScreenshotDriverTest.groovy)
+- [`com/example/MiniScreenshotDriverTest.groovy`](Include/scripts/groovy/com/example/MiniScreenshotDriverTest.groovy)
 
 These test classes should be coded just as usual JUnit4 tests. For example, `junittutorial.GreeterTest` looks like this:
 
