@@ -53,16 +53,16 @@ In December 2018, I thought that I could test my Custom Keywords using the BDD f
 - [Step Definitions](https://docs.katalon.com/katalon-studio/docs/step-definitions.html)
 - [Running Cucumber Features file](https://docs.katalon.com/katalon-studio/docs/running-cucumber-features-file.html)
 
-It seemed OK. I could nearly achieve what I wanted with it. But unfortunately I was blocked by a small defect in Katalon Studio:
+It seemed OK. I could nearly achieve what I wanted to do. But unfortunately I was blocked by a defect in Katalon Studio:
 - [The Cucumber version bundled in Katalon Studio 5.10.1 is old, therefore sometimes throws exception](https://forum.katalon.com/t/poor-error-diagnostics-when-cucumber-feature-is-problematic/17474/8)
 
 I could not rely on Cucumber in Katalon Studio.
 
 ### My fourth attempt
 
-In January 2019 I read the source of [`com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords`](https://github.com/katalon-studio/katalon-studio-testing-framework/blob/master/Include/scripts/groovy/com/kms/katalon/core/cucumber/keyword/CucumberBuiltinKeywords.groovy) which as disclosed on GitHub. `CucumberBuiltinKeywords` is the core part of Cucumber-Katalon integration. I learned it and found that **I could mimic that to implement JUnit-Katalon integration**. So I made a new custom keyword class  [`com.kazurayam.ksbackyard.junit.JUnitCustomKeywords`](Keywords/com/kazurayam/ksbackyard/junit/JUnitCustomKeywords.groovy). This looks working fine.
+In January 2019 I read the source of [`com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords`](https://github.com/katalon-studio/katalon-studio-testing-framework/blob/master/Include/scripts/groovy/com/kms/katalon/core/cucumber/keyword/CucumberBuiltinKeywords.groovy) on GitHub. `CucumberBuiltinKeywords` is the core part of Cucumber-Katalon integration. I studied it to find that **I could mimic that to implement JUnit-Katalon integration**. So I made a new custom keyword class  [`com.kazurayam.ksbackyard.junit.JUnitCustomKeywords`](Keywords/com/kazurayam/ksbackyard/junit/JUnitCustomKeywords.groovy). This looks working fine.
 
-A long and winding road it was. I believe I have found out a satisfactory method to test my custom keywords with JUnit4 within Katalon Studio.
+A long and winding road it was. I believe I have found out a satisfactory method to test my custom keywords with JUnit4 within Katalon Studio. I publish it as the 2nd release of [my demo project](https://github.com/kazurayam/RunningJUnitInKatalonStudio/).
 
 ## Description of the demo (2nd release)
 
@@ -83,7 +83,7 @@ I have made some custom keyword classes. I want to test them using JUnit4:
 I made a few Test Cases in the ordinary `<projectDir>/Test Cases` folder. These test cases run JUnit4 in Katalon Studio.
 - [`CalculatorTest`](Scripts/test/CalculatorTestRunner/Script1547192368406.groovy)
 - [`GreeterTestRunner`](Scripts/test/GreeterTestRunner/Script1547296768493.groovy)
-- [`AllCalculatorTestRunner`](Scripts/test/AllCalculatorTestRunner/Script1547284601981.groovy)
+- [`AllJunittutorialTestsRunner`](Scripts/test/AllJunittutorialTestsRunner/Script1547339195032.groovy)
 - [`MiniScreenshotDriverTestRunner`](Scripts/test/MiniScreenshotDriverTestRunner/Script1547301583006.groovy)
 
 For example, MiniScreenshotDriverTestRunner looks like this:
