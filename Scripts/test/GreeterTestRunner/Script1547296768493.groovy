@@ -1,3 +1,3 @@
 import junittutorial.GreeterTest
 
-CustomKeywords.'com.kazurayam.ksbackyard.junit.JUnitCustomKeywordsTest.runWithJUnitRunner'(GreeterTest.class)
+CustomKeywords.'com.kazurayam.ksbackyard.junit.JUnitCustomKeywords.runWithJUnitRunner'(GreeterTest.class)
