@@ -38,7 +38,7 @@ public class JUnitCustomKeywords {
 	 * Test Case:
 	 * <PRE>
 	 * import junittutorial.CalculatorTest
-	 * CustomKeywords.'com.kazurayam.ksbackyard.junit.JUnitCustomKeywords.runWithJUnitRunner'(CalculatorTest.class)
+	 * CustomKeywords.'com.kazurayam.ksbackyard.junit.JUnitCustomKeywordsTest.runWithJUnitRunner'(CalculatorTest.class)
 	 * </PRE>
 	 * 
 	 * The following is a JUnit test (localated at Include/scripts/groovy/junittutorial/CalculatorTest.groovy) 
@@ -140,7 +140,7 @@ public class JUnitCustomKeywords {
 			} else {
 				List failuresDescriptions = []
 				for (Failure failure: result.getFailures()) {
-					failuresDescriptions.add("\n>>>>\n" + failure.getTrace() + "<<<<\n")
+					failuresDescriptions.add("\n" + indentLines(failure.getTrace(), "\t") + "\t")
 				}
 				KeywordMain.stepFailed(
 						MessageFormat.format("These following reason:\n {0}", failuresDescriptions),
@@ -178,6 +178,24 @@ public class JUnitCustomKeywords {
 	}
 
 
+	/**
+	 * 
+	 * "aaa\nbbb\nccc" -> "    aaa\n    bbb\n    ccc\n"
+	 * 
+	 * @param source
+	 * @return
+	 */
+	static String indentLines(String lines, String indent = '>>  ') {
+		StringWriter sw = new StringWriter()
+		BufferedWriter bw = new BufferedWriter(sw)
+		BufferedReader br = new BufferedReader(new StringReader(lines))
+		String s;
+		while ((s = br.readLine()) != null) {
+			bw.println(indent + s)
+		}
+		bw.flush()
+		return sw.toString()
+	}
 
 
 	/**
