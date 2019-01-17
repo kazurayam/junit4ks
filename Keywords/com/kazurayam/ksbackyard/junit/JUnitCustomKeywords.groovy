@@ -140,7 +140,7 @@ public class JUnitCustomKeywords {
 			} else {
 				List failuresDescriptions = []
 				for (Failure failure: result.getFailures()) {
-					failuresDescriptions.add(failure.getMessage())
+					failuresDescriptions.add("\n>>>>\n" + failure.getTrace() + "<<<<\n")
 				}
 				KeywordMain.stepFailed(
 						MessageFormat.format("These following reason:\n {0}", failuresDescriptions),
