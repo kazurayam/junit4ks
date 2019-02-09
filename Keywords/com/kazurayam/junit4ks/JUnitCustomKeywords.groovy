@@ -1,4 +1,4 @@
-package com.kazurayam.ksbackyard.junit
+package com.kazurayam.junit4ks
 
 import java.text.MessageFormat
 
@@ -14,14 +14,12 @@ import com.kms.katalon.core.logging.KeywordLogger
 import com.kms.katalon.core.model.FailureHandling
 
 /**
- * A test case can call this Custom Keyword to execute a class annotated with JUnit4's &#64;Test.
- * In other words, you can execute a JUnit-based test within Katalon Studio.
+ * A custom keyword in Katalon Studio. This enables you to run JUnit4 to 
+ * perform test-driven development for your own custom keywords.
  * 
- * 
- * 
- * I read and learned https://github.com/katalon-studio/katalon-studio-testing-framework/blob/master/Include/scripts/groovy/com/kms/katalon/core/cucumber/keyword/CucumberBuiltinKeywords.groovy
- * This class is almost the same as com.kms.katalon.core.cucumber.keyword.CucumberBuiltingKeywords.
- * 
+ * I read and learned form
+ * https://github.com/katalon-studio/katalon-studio-testing-framework/blob/master/Include/scripts/groovy/com/kms/katalon/core/cucumber/keyword/CucumberBuiltinKeywords.groovy
+ *
  * @author kazurayam
  *
  */
@@ -31,28 +29,28 @@ public class JUnitCustomKeywords {
 
 	/**
 	 * Example:
-	 * 
-	 * You can run the following test case `Test Cases/test/CalculatorTestRunner` in Katalon Studio 
+	 *
+	 * You can run the following test case `Test Cases/test/CalculatorTestRunner` in Katalon Studio
 	 * just as you run a usual test case by clicking the Run button.
-	 * 
+	 *
 	 * Test Case:
 	 * <PRE>
 	 * import junittutorial.CalculatorTest
 	 * CustomKeywords.'com.kazurayam.ksbackyard.junit.JUnitCustomKeywordsTest.runWithJUnitRunner'(CalculatorTest.class)
 	 * </PRE>
-	 * 
-	 * The following is a JUnit test (localated at Include/scripts/groovy/junittutorial/CalculatorTest.groovy) 
+	 *
+	 * The following is a JUnit test (localated at Include/scripts/groovy/junittutorial/CalculatorTest.groovy)
 	 * executed by the above test case:
 	 * <PRE>
 	 * package junittutorial
-	 * 
+	 *
 	 * import static org.hamcrest.CoreMatchers.*
 	 * import static org.junit.Assert.*
-	 * 
+	 *
 	 * import org.junit.Test
 	 * import org.junit.runner.RunWith
 	 * import org.junit.runners.JUnit4
-	 * 
+	 *
 	 * @RunWith(JUnit4.class)
 	 * class CalculatorTest {
 	 * 	@Test
@@ -61,14 +59,14 @@ public class JUnitCustomKeywords {
 	 * 		int actual = Calculator.multiply(7, 3)
 	 * 		assertThat(actual, is(expected))
 	 * 	}
-	 * 
+	 *
 	 * 	@Test
 	 * 	void testDivide_wrongType() {
 	 * 		double expected = 1.5f
 	 * 		double actual = Calculator.divide(3, 2)
 	 * 		assertThat(actual, is(not(expected)))
 	 * 	}
-	 * 
+	 *
 	 * 	@Test
 	 * 	void testDivide() {
 	 * 		int expected = 1
@@ -77,35 +75,35 @@ public class JUnitCustomKeywords {
 	 * 	}
 	 * }
 	 * </PRE>
-	 * 
+	 *
 	 * Finally the class to be tested is located at `Keywords/junittutorial/Calculator.groovy`:
 	 * <PRE>
 	 * package junittutorial
-	 * 
+	 *
 	 * import com.kms.katalon.core.annotation.Keyword
-	 * 
+	 *
 	 * class Calculator {
-	 * 
+	 *
 	 * 	   @Keyword
 	 * 	   static int add(int a, int b) {
 	 * 		   return a + b;
 	 * 	   }
-	 * 
+	 *
 	 * 	   @Keyword
 	 * 	   static int subtract(int a, int b) {
 	 * 		   return a - b;
 	 * 	   }
-	 * 
+	 *
 	 * 	   @Keyword
 	 * 	   static int multiply(int x, int y) {
 	 * 		   return x * y
 	 * 	   }
-	 * 
+	 *
 	 * 	   @Keyword
 	 * 	   static int divide(int x, int y) {
 	 * 		   return x / y
 	 * 	   }
-	 * 
+	 *
 	 * 	   @Keyword
 	 * 	   static int power(int a, int b){
 	 * 		   int answer =a;
@@ -116,12 +114,12 @@ public class JUnitCustomKeywords {
 	 *     }
 	 * }
 	 * </PRE>
-	 * 
+	 *
 	 * Please note that in the targeted Custom Keyword (e.g, Keywords/com/example/MiniScreenshotDriver.groovy) and
-	 * JUnit test (e.g, Include/scripts/groovy/com/example/MiniScreenshotDriverTest.groovy), you can call 
+	 * JUnit test (e.g, Include/scripts/groovy/com/example/MiniScreenshotDriverTest.groovy), you can call
 	 * any Katalon Studio API including org.openqa.selenium.WebDriver. Your JUnit invoked within Katalon Studio now
 	 * can interact with your Application Under Test (web site) through WebDriver. This is what I wanted to achieve.
-	 * 
+	 *
 	 * @param junitRunnerClass
 	 * @param flowControl
 	 * @return
@@ -153,9 +151,9 @@ public class JUnitCustomKeywords {
 	/**
 	 * Run the given <code>junitRunnerClass</code> that is annotated with
 	 * {@link JUnit} runner by invoke JUnit runner.
-	 * 
+	 *
 	 * @param junitRunnerClass a class that is annotated with {@link JUnit} runner.
-	 * 
+	 *
 	 * <p>
 	 * Example of <code>junitRunnerClass</code>:
 	 * <ul>
@@ -165,7 +163,7 @@ public class JUnitCustomKeywords {
 	 * import org.junit.runners.JUnit4
 	 * &#64;RunWith(JUnit4.class)
 	 * public class MyJunitRunner {}
-	 * 
+	 *
 	 * </pre>
 	 * </li>
 	 * </ul>
@@ -179,9 +177,9 @@ public class JUnitCustomKeywords {
 
 
 	/**
-	 * 
+	 *
 	 * "aaa\nbbb\nccc" -> "    aaa\n    bbb\n    ccc\n"
-	 * 
+	 *
 	 * @param source
 	 * @return
 	 */
@@ -199,7 +197,7 @@ public class JUnitCustomKeywords {
 
 
 	/**
-	 * 
+	 *
 	 * @author urayamakazuaki
 	 *
 	 */
@@ -226,7 +224,7 @@ public class JUnitCustomKeywords {
 
 
 	/**
-	 * 
+	 *
 	 * @author urayamakazuaki
 	 *
 	 */
