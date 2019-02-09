@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Project>
-   <description></description>
-   <name>RunningJUnitInKatalonStudio</name>
+   <description>A custom keyword that run JUnit4 in Katalon Studio. 
+This enables you to perform test-driven development for your custom keywords.
+</description>
+   <name>junit4ks</name>
    <tag></tag>
    <UUID>7f8264c1-803e-409c-88b6-b24a6eb524cc</UUID>
    <migratedVersion>5.9.0</migratedVersion>
