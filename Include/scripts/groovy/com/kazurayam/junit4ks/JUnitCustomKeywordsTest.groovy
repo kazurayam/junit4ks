@@ -1,4 +1,4 @@
-package com.kazurayam.ksbackyard.junit
+package com.kazurayam.junit4ks
 
 import static org.hamcrest.CoreMatchers.*
 import static org.junit.Assert.*
@@ -6,7 +6,7 @@ import static org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import com.kazurayam.ksbackyard.junit.JUnitCustomKeywords
+import com.kazurayam.junit4ks.JUnitCustomKeywords
 
 @RunWith(JUnit4.class)
 class JUnitCustomKeywordsTest {
