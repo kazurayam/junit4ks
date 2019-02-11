@@ -16,7 +16,7 @@ class GreeterTest {
 		String actual = Greeter.greet("world")
 		assertThat(actual, is(expected))
 	}
-	
+
 	@Test
 	void testGreet_intensionalFailure() {
 		String expected = "Goodnight, Man"
