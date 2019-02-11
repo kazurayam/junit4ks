@@ -3,14 +3,17 @@ package com.kazurayam.junit4ks
 import java.text.MessageFormat
 
 import org.junit.runner.Computer
+import org.junit.runner.Description
 import org.junit.runner.JUnitCore
 import org.junit.runner.Result
 import org.junit.runner.notification.Failure
+import org.junit.runner.notification.RunListener
 
 import com.kms.katalon.core.annotation.Keyword
 import com.kms.katalon.core.configuration.RunConfiguration
 import com.kms.katalon.core.keyword.internal.KeywordMain
 import com.kms.katalon.core.logging.KeywordLogger
+import com.kms.katalon.core.util.KeywordUtil
 import com.kms.katalon.core.model.FailureHandling
 
 /**
@@ -128,6 +131,7 @@ public class JUnitCustomKeywords {
 	public static JUnitRunnerResult runWithJUnitRunner(Class junitRunnerClass, FailureHandling flowControl) {
 		return KeywordMain.runKeyword({
 			JUnitCore core = new JUnitCore()
+			core.addListener(new RunListener4KS())
 			Computer computer = new Computer()
 			Result result = core.run(computer, junitRunnerClass)
 			boolean runSuccess = result.wasSuccessful()
@@ -148,6 +152,28 @@ public class JUnitCustomKeywords {
 		}, flowControl, "Keyword runWithJUnitRunner failed")
 	}
 
+	/**
+	 * 
+	 * @author urayamakazuaki
+	 *
+	 */
+	private static class RunListener4KS extends RunListener {
+		boolean succeeded
+		public void testStarted(Description description) {
+			KeywordUtil.logInfo(description.toString() + " started")
+			succeeded = true
+		}
+		public void testFailure(Failure failure) {
+			KeywordUtil.logInfo("NG")
+			this.succeeded = false
+		}
+		public void testFinished(Description description) {
+			if (succeeded) {
+				KeywordUtil.logInfo('OK')
+			}
+		}
+	}
+	
 	/**
 	 * Run the given <code>junitRunnerClass</code> that is annotated with
 	 * {@link JUnit} runner by invoke JUnit runner.
