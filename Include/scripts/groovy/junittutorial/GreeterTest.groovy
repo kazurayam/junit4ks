@@ -17,6 +17,9 @@ class GreeterTest {
 		assertThat(actual, is(expected))
 	}
 
+	/**
+	 * this will fail, intentionally for demonstration purpose
+	 */
 	@Test
 	void testGreet_intensionalFailure() {
 		String expected = "Goodnight, Man"

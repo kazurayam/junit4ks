@@ -153,7 +153,7 @@ public class JUnitCustomKeywords {
 			return junitResult
 		}, flowControl, "Keyword runWithJUnitRunner failed")
 	}
-
+	
 	/**
 	 * 
 	 * @author urayamakazuaki
@@ -163,9 +163,9 @@ public class JUnitCustomKeywords {
 		boolean succeeded
 		public void testStarted(Description description) {
 			logger.startTest(
-				description.getDisplayName(), 
-				new HashMap<String, String>(), 
-				new Stack<KeywordLogger.KeywordStackElement>())
+					description.getDisplayName(),
+					new HashMap<String, String>(),
+					new Stack<KeywordLogger.KeywordStackElement>())
 			succeeded = true
 		}
 		public void testFailure(Failure failure) {
