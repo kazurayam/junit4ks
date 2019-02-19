@@ -30,4 +30,14 @@ class CalculatorTest {
 		int actual = Calculator.divide(3, 2)
 		assertThat(actual, is(expected))
 	}
+
+	/**
+	 * this will fail, intentionally for demonstration purpose
+	 */
+	@Test
+	void testThatFails() {
+		int expected = 1
+		int actual = 0
+		assertThat(actual, is(expected))
+	}
 }
