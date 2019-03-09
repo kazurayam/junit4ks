@@ -155,3 +155,45 @@ In your Katalon Studio project, do the following:
 5. run your Katalon Studio Testcase by clicking `Run` button in Katalon Studio.
 
 >I know, it is terrible copying and pasting *.groovy source into your projects one by one. I want to make the junit4ks installation into your Katalon Studio projects more professional. I will look at [Katalon Plugin Platform](https://forum.katalon.com/t/open-source-katalon-plugin-platform-beta/17248)
+
+## @IgnoreRest
+
+I like 'Spock' because of its @IgnoreRest annotation. I wanted to use @IgnoreRest in my test on JUnit as well. One day I found a nice article:
+http://www.qualityontime.eu/articles/technology-stack/toolbox/junit-ignorerest/
+
+I implemented the proposded code into the junit4ks.
+
+See `Include/scripts/groovy/junittutorial/CalculatorWithIgnoreRestTest.groovy`:
+```
+package junittutorial
+
+import static org.hamcrest.CoreMatchers.*
+import static org.junit.Assert.*
+
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
+
+import com.kazurayam.junit4ks.IgnoreRestSupportRunner
+import com.kazurayam.junit4ks.IgnoreRest
+
+@RunWith(IgnoreRestSupportRunner.class)
+class CalculatorWithIgnoreRestTest {
+
+	@Test
+	@IgnoreRest
+	void testMultiply() {
+		int expected = 21
+		int actual = Calculator.multiply(7, 3)
+		assertThat(actual, is(expected))
+	}
+
+	@Test
+	void testDivide_wrongType() {
+		double expected = 1.5f
+		double actual = Calculator.divide(3, 2)
+		assertThat(actual, is(not(expected)))
+	}
+
+}
+```
