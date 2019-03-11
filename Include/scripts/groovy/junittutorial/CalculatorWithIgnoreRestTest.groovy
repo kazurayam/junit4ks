@@ -7,10 +7,14 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
-@RunWith(JUnit4.class)
-class CalculatorTest {
+import com.kazurayam.junit4ks.IgnoreRestSupportRunner
+import com.kazurayam.junit4ks.IgnoreRest
+
+@RunWith(IgnoreRestSupportRunner.class)
+class CalculatorWithIgnoreRestTest {
 
 	@Test
+	@IgnoreRest
 	void testMultiply() {
 		int expected = 21
 		int actual = Calculator.multiply(7, 3)

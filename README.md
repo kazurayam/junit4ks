@@ -4,6 +4,8 @@ Running JUnit in Katalon Studio
 by kazurayam
 - 1st release at 18 July 2018
 - 2nd release at 13 January 2019
+- 3rd release at 10 Feb 2019
+- 4th release at 20 Feb 2019
 
 ## What is this?
 
@@ -64,6 +66,8 @@ In January 2019 I read the source of [`com.kms.katalon.core.cucumber.keyword.Cuc
 
 A long and winding road it was. I believe I have found out a satisfactory method to test my custom keywords with JUnit4 within Katalon Studio. I publish it as the 2nd release of [my demo project](https://github.com/kazurayam/RunningJUnitInKatalonStudio/).
 
+Later, 10 Feb 2019, I changed the package name from `com.kazurayam.ksbackyard.junit` to `com.kazurayam.junit4ks`, having "JUnit4 for Katalon Studio" in mind, for getting better understood what it is. Also note, @devallex88 made a [contribution](https://github.com/kazurayam/junit4ks/compare/1.4...1.6) to this.
+
 ## Description of the demo (2nd release)
 
 ### Prerequisites
@@ -81,16 +85,16 @@ I have made some custom keyword classes. I want to test them using JUnit4:
 ### Test Cases
 
 I made a few Test Cases in the ordinary `<projectDir>/Test Cases` folder. These test cases run JUnit4 in Katalon Studio.
-- [`CalculatorTest`](Scripts/test/CalculatorTestRunner/Script1547192368406.groovy)
-- [`GreeterTestRunner`](Scripts/test/GreeterTestRunner/Script1547296768493.groovy)
-- [`AllJunittutorialTestsRunner`](Scripts/test/AllJunittutorialTestsRunner/Script1547339195032.groovy)
-- [`MiniScreenshotDriverTestRunner`](Scripts/test/MiniScreenshotDriverTestRunner/Script1547301583006.groovy)
+- `Scripts/test/CalculatorTest`
+- `Scripts/test/GreeterTestRunner`
+- `Scripts/test/AllJunittutorialTestsRunner`
+- `Scripts/test/MiniScreenshotDriverTestRunner`
 
 For example, MiniScreenshotDriverTestRunner looks like this:
 ```
 import com.example.MiniScreenshotDriverTest
 
-CustomKeywords.'com.kazurayam.ksbackyard.junit.JUnitCustomKeywords.runWithJUnitRunner'(MiniScreenshotDriverTest.class)
+CustomKeywords.'com.kazurayam.junit4ks.JUnitCustomKeywords.runWithJUnitRunner'(MiniScreenshotDriverTest.class)
 ```
 
 ### How to run tests
@@ -137,15 +141,59 @@ It's a plain old JUnit test.
 ### Custom Keyword `runWithJUnitRunner` integrates JUnit with Katalon Studio
 
 `runWithJUnitRunner` keyword enables you to run your tests with JUnit4 in Katalon Studio. See the following source code:
-- [`com.kazurayam.ksbackyard.junit.JUnitCustomKeywords`](Keywords/com/kazurayam/ksbackyard/junit/JUnitCustomKeywords.groovy)
+- [`com.kazurayam.junit4ks.JUnitCustomKeywords`](Keywords/com/kazurayam/junit4ks/JUnitCustomKeywords.groovy)
 
 I developed this as a mimic of the  [`com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords`](https://github.com/katalon-studio/katalon-studio-testing-framework/blob/master/Include/scripts/groovy/com/kms/katalon/core/cucumber/keyword/CucumberBuiltinKeywords.groovy) class.
 
 ## How to apply this method to your projects
 
 In your Katalon Studio project, do the following:
-1. make a file `Keywords/com/kazurayam/ksbackyard/junit/JUnitCustomKeywords.groovy`
-2. Into it, copy and paste the code [`com.kazurayam.ksbackyard.junit.JUnitCustomKeywords`](Keywords/com/kazurayam/ksbackyard/junit/JUnitCustomKeywords.groovy), save it.
+1. make a file `Keywords/com/kazurayam/junit4ks/JUnitCustomKeywords.groovy`
+2. Into it, copy and paste the code [`com.kazurayam.junit4ks.JUnitCustomKeywords`](Keywords/com/kazurayam/junit4ks/JUnitCustomKeywords.groovy), save it.
 3. make your JUnit test in `Include/scripts/groovy` folder. It would be something like [`Include/scripts/groovy/junittutorial/CalculatorTest.groovy`](Include/scripts/groovy/junittutorial/CalculatorTest.groovy)
 4. make your Katalon Studio Testcase in `Test Cases` folder. It would be something like [`Test Cases/AllJunittutorialTestsRunner`](Scripts/test/AllJunittutorialTestsRunner/Script1547339195032.groovy)
 5. run your Katalon Studio Testcase by clicking `Run` button in Katalon Studio.
+
+>I know, it is terrible copying and pasting *.groovy source into your projects one by one. I want to make the junit4ks installation into your Katalon Studio projects more professional. I will look at [Katalon Plugin Platform](https://forum.katalon.com/t/open-source-katalon-plugin-platform-beta/17248)
+
+## @IgnoreRest
+
+I like 'Spock' because of its @IgnoreRest annotation. I wanted to use @IgnoreRest in my test on JUnit as well. One day I found a nice article:
+http://www.qualityontime.eu/articles/technology-stack/toolbox/junit-ignorerest/
+
+I implemented the proposded code into the junit4ks.
+
+See `Include/scripts/groovy/junittutorial/CalculatorWithIgnoreRestTest.groovy`:
+```
+package junittutorial
+
+import static org.hamcrest.CoreMatchers.*
+import static org.junit.Assert.*
+
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
+
+import com.kazurayam.junit4ks.IgnoreRestSupportRunner
+import com.kazurayam.junit4ks.IgnoreRest
+
+@RunWith(IgnoreRestSupportRunner.class)
+class CalculatorWithIgnoreRestTest {
+
+	@Test
+	@IgnoreRest
+	void testMultiply() {
+		int expected = 21
+		int actual = Calculator.multiply(7, 3)
+		assertThat(actual, is(expected))
+	}
+
+	@Test
+	void testDivide_wrongType() {
+		double expected = 1.5f
+		double actual = Calculator.divide(3, 2)
+		assertThat(actual, is(not(expected)))
+	}
+
+}
+```
