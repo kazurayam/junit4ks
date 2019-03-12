@@ -7,6 +7,10 @@ by kazurayam
 - 3rd release at 10 Feb 2019
 - 4th release at 20 Feb 2019
 
+## API doc
+
+The groovydoc of junit4ks is [here](https://kazurayam.github.io/junit4ks/index.html)
+
 ## What is this?
 
 This is a simple [Katalon Studio](https://www.katalon.com/) project for demonstration purpose. You can download the zip file from [Releases](https://github.com/kazurayam/RunningJUnitInKatalonStudio/releases) page, unzip it, open it with your Katalon Studio.
