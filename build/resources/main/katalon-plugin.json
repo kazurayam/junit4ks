@@ -1,9 +1,0 @@
-{
-    "keywords": [
-        "com.kazurayam.junit4ks.IgnoreRest",
-        "com.kazurayam.junit4ks.IgnoreRestHelper",
-        "com.kazurayam.junit4ks.IgnoreRestRule",
-        "com.kazurayam.junit4ks.IgnoreRestSupportRunner",
-        "com.kazurayam.junit4ks.JUnitCustomKeywords"
-    ]
-}

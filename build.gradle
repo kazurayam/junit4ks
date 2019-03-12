@@ -5,11 +5,17 @@ plugins {
     id "com.katalon.gradle-plugin" version "0.0.6"
 }
 
+ext {
+    groovyVersion   = '2.4.9'
+}
+
 repositories {
     jcenter()
     mavenCentral()
 }
-
+dependencies {
+    compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
+}
 sourceSets {
     main {
         groovy {
@@ -23,3 +29,15 @@ katalon {
     dependencyPrefix = "com.katalon"
     minimize = false
 }
+
+task groovydoc(type: Groovydoc, overwrite:true) {
+    source = sourceSets.main.groovy
+    classpath = configurations.compile
+    include 'com/kazurayam/junit4ks/*'
+    exclude '**/*Test.groovy'
+}
+task publishGroovydoc(type: Copy) {
+    from 'build/docs/groovydoc'
+    into 'docs'
+}
+groovydoc.finalizedBy publishGroovydoc
