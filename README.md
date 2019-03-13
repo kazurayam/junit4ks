@@ -9,7 +9,7 @@ by kazurayam
 
 ## API doc
 
-The groovydoc of junit4ks is [here](https://kazurayam.github.io/junit4ks/index.html)
+The groovydoc of junit4ks is [here](https://kazurayam.github.io/junit4ks/api/index.html)
 
 ## What is this?
 

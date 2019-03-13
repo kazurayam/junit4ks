@@ -6,7 +6,7 @@ plugins {
 }
 
 ext {
-    groovyVersion   = '2.4.9'
+    groovyVersion   = '2.4.7'
 }
 
 repositories {
@@ -14,7 +14,7 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
+    compileOnly "org.codehaus.groovy:groovy-all:${groovyVersion}"
 }
 sourceSets {
     main {
@@ -38,6 +38,6 @@ task groovydoc(type: Groovydoc, overwrite:true) {
 }
 task publishGroovydoc(type: Copy) {
     from 'build/docs/groovydoc'
-    into 'docs'
+    into 'docs/api'
 }
 groovydoc.finalizedBy publishGroovydoc
