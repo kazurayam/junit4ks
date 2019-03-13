@@ -38,6 +38,6 @@ task groovydoc(type: Groovydoc, overwrite:true) {
 }
 task publishGroovydoc(type: Copy) {
     from 'build/docs/groovydoc'
-    into 'docs'
+    into 'docs/api'
 }
 groovydoc.finalizedBy publishGroovydoc
