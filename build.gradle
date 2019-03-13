@@ -9,12 +9,16 @@ ext {
     groovyVersion   = '2.4.7'
 }
 
+configurations {
+    generateDocs
+}
+
 repositories {
     jcenter()
     mavenCentral()
 }
 dependencies {
-    compileOnly "org.codehaus.groovy:groovy-all:${groovyVersion}"
+    generateDocs "org.codehaus.groovy:groovy-all:${groovyVersion}"
 }
 sourceSets {
     main {
@@ -33,6 +37,7 @@ katalon {
 task groovydoc(type: Groovydoc, overwrite:true) {
     source = sourceSets.main.groovy
     classpath = configurations.compile
+    groovyClasspath = project.configurations.generateDocs
     include 'com/kazurayam/junit4ks/*'
     exclude '**/*Test.groovy'
 }
