@@ -14,7 +14,7 @@
       <guid>7e7a2f72-9743-4617-a383-5eb8dcf256d7</guid>
       <isReuseDriver>false</isReuseDriver>
       <isRun>true</isRun>
-      <testCaseId>Test Cases/test/junittutorial/AllJunittutorialTestsRunner</testCaseId>
+      <testCaseId>Test Cases/test/junittutorial/AllTestsRunner</testCaseId>
    </testCaseLink>
    <testCaseLink>
       <guid>e457e914-5e7c-4ac8-9e27-2edbb0d8809a</guid>
