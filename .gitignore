@@ -20,5 +20,6 @@ Reports/
 ## uncomment the following line
 # /katalon.properties
 
+# Gradle
 build/
 .gradle/
