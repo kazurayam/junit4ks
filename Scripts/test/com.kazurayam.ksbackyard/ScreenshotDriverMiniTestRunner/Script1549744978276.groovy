@@ -1,3 +1,5 @@
+import static com.kazurayam.junit4ks.JUnitCustomKeywords.runWithJUnitRunner
+
 import com.example.MiniScreenshotDriverTest
 
-CustomKeywords.'com.kazurayam.junit4ks.JUnitCustomKeywords.runWithJUnitRunner'(MiniScreenshotDriverTest.class)
+runWithJUnitRunner(MiniScreenshotDriverTest.class)
