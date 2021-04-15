@@ -3,20 +3,15 @@ package com.kazurayam.junit4ks
 import java.text.MessageFormat
 
 import org.junit.runner.Computer
-import org.junit.runner.Description
 import org.junit.runner.JUnitCore
 import org.junit.runner.Result
 import org.junit.runner.notification.Failure
-import org.junit.runner.notification.RunListener
 
 import com.kms.katalon.core.annotation.Keyword
 import com.kms.katalon.core.configuration.RunConfiguration
-import com.kms.katalon.core.constants.StringConstants
 import com.kms.katalon.core.keyword.internal.KeywordMain
-import com.kms.katalon.core.logging.ErrorCollector
 import com.kms.katalon.core.logging.KeywordLogger
 import com.kms.katalon.core.model.FailureHandling
-import com.kms.katalon.core.util.internal.ExceptionsUtil
 
 /**
  * A custom keyword in Katalon Studio. This enables you to run JUnit4 to 
@@ -133,7 +128,8 @@ public class JUnitCustomKeywords {
 	public static JUnitRunnerResult runWithJUnitRunner(Class junitRunnerClass, FailureHandling flowControl) {
 		return KeywordMain.runKeyword({
 			JUnitCore core = new JUnitCore()
-			core.addListener(new RunListener4KS())
+			// core.addListener(new RunListener4ks())
+			core.addListener(new LegacyXmlReportGeneratingListener())
 			Computer computer = new Computer()
 			Result result = core.run(computer, junitRunnerClass)
 			boolean runSuccess = result.wasSuccessful()
@@ -154,39 +150,6 @@ public class JUnitCustomKeywords {
 		}, flowControl, "Keyword runWithJUnitRunner failed")
 	}
 
-	/**
-	 * 
-	 * @author urayamakazuaki
-	 *
-	 */
-	private static class RunListener4KS extends RunListener {
-		boolean succeeded
-		public void testStarted(Description description) {
-			logger.startTest(
-					description.getDisplayName(),
-					new HashMap<String, String>(),
-					new Stack<KeywordLogger.KeywordStackElement>())
-			succeeded = true
-		}
-		public void testFailure(Failure failure) {
-			succeeded = false
-			String name =  failure.getDescription().getDisplayName()
-			Throwable t = failure.getException()
-			String stackTraceForThrowable = ExceptionsUtil.getStackTraceForThrowable(t)
-			String message = MessageFormat.format(
-					StringConstants.MAIN_LOG_MSG_FAILED_BECAUSE_OF,
-					name,
-					stackTraceForThrowable)
-			logger.logMessage(ErrorCollector.fromError(t), message, t);
-		}
-		public void testFinished(Description description) {
-			String name =  description.getDisplayName()
-			if (succeeded) {
-				logger.logPassed(name)
-			}
-			logger.endTest(name, new HashMap<String, String>())
-		}
-	}
 
 	/**
 	 * Run the given <code>junitRunnerClass</code> that is annotated with

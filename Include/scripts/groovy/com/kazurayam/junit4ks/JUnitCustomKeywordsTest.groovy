@@ -14,7 +14,7 @@ class JUnitCustomKeywordsTest {
 	@Test
 	void testIndentLines() {
 		String expected = "\taaa\n\tbbb\n\tccc\n"
-		String actual = JUnitCustomKeywords.indentLines("aaa\nbbb\nccc\n")
+		String actual = JUnitCustomKeywords.indentLines("aaa\nbbb\nccc\n", "\t")
 		assertThat(actual, is(expected))
 	}
 }

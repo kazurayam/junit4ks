@@ -22,8 +22,13 @@ class GreeterTest {
 	 */
 	@Test
 	void testGreet_intensionalFailure() {
-		String expected = "Goodnight, Man"
-		String actual = Greeter.greet("Man")
-		assertThat(actual, is(expected))
+		try {
+			String expected = "Goodnight, Man"
+			String actual = Greeter.greet("Man")
+			assertThat(actual, is(expected))
+			fail("should fail here")
+		} catch (java.lang.AssertionError e) {
+			;
+		} 
 	}
 }

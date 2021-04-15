@@ -1,4 +1,4 @@
-package junittutorial
+package my.tutorial
 
 import com.kms.katalon.core.annotation.Keyword
 
