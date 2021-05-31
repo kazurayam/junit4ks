@@ -23,3 +23,8 @@ Reports/
 # Gradle
 build/
 .gradle/
+tmp/
+
+.cache/
+
+settings/
