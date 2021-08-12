@@ -57,12 +57,12 @@ task publishGroovydoc(type: Copy) {
 groovydoc.finalizedBy publishGroovydoc
 
 task groovydocJar(type: Jar) {
-    archiveClassifier = 'groovydoc'
+    archiveClassifier = 'javadoc'
     from groovydoc
 }
 
 task sourcesJar(type: Jar) {
-    archiveClassifier = 'souurces'
+    archiveClassifier = 'sources'
     from sourceSets.main.allSource
 }
 
