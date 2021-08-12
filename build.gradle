@@ -1,11 +1,18 @@
 plugins {
-    id 'java'
     id 'groovy'
-    id 'com.github.johnrengelman.shadow' version '4.0.4'
-    id "com.katalon.gradle-plugin" version "0.0.6"
+    id 'maven-publish'
+    id 'signing'
 }
 
+group = 'com.kazurayam'
+version = '1.6'
+
+def defaultEncoding = 'UTF-8'
+tasks.withType(AbstractCompile).each {it.options.encoding = defaultEncoding }
+tasks.withType(GroovyCompile).each {it.groovyOptions.encoding = defaultEncoding}
+
 ext {
+    isReleaseVersion = ! version.endsWith("SNAPSHOT")
     groovyVersion   = '2.4.7'
 }
 
@@ -14,29 +21,31 @@ configurations {
 }
 
 repositories {
-    jcenter()
     mavenCentral()
 }
+
 dependencies {
+    implementation fileTree(dir: "/Applications/katalon Studio.app/Contents/Eclipse/plugins", include: ['*.jar'])
+    implementation "org.codehaus.groovy:groovy-all:${groovyVersion}"
     generateDocs "org.codehaus.groovy:groovy-all:${groovyVersion}"
 }
+
 sourceSets {
     main {
         groovy {
-            srcDirs = ['Keywords', 'Include/scripts/groovy']
-            srcDir 'Libs'
+            srcDirs = ['Keywords', 'Libs']
+            excludes = ['CustomKeywords.groovy', "Temp*.groovy"]
+        }
+    }
+    test {
+        groovy {
+            srcDirs = ['Include/scripts/groovy']
         }
     }
 }
 
-katalon {
-    dependencyPrefix = "com.kazurayam"
-    minimize = false
-}
-
 task groovydoc(type: Groovydoc, overwrite:true) {
     source = sourceSets.main.groovy
-    classpath = configurations.compile
     groovyClasspath = project.configurations.generateDocs
     include 'com/kazurayam/junit4ks/*'
     exclude '**/*Test.groovy'
@@ -46,3 +55,68 @@ task publishGroovydoc(type: Copy) {
     into 'docs/api'
 }
 groovydoc.finalizedBy publishGroovydoc
+
+task groovydocJar(type: Jar) {
+    archiveClassifier = 'groovydoc'
+    from groovydoc
+}
+
+task sourcesJar(type: Jar) {
+    archiveClassifier = 'souurces'
+    from sourceSets.main.allSource
+}
+
+publishing {
+    publications {
+        junit4ks(MavenPublication) {
+            artifact sourcesJar
+            artifact groovydocJar
+            pom {
+                groupId = project.group
+                name = project.rootProject.name
+                description = 'A Katalon Studio plugin that enables running JUnit4 tests for Custom Keyword classes'
+                url = 'https://kazurayam.github.io/junit4ks/'
+                from components.java
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'https://www.apache.org.licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'kazurayam'
+                        name = 'URAYAMA,kazuaki'
+                        email = 'kazuaki.urayama@gmail.com'
+                    }
+                }
+                scm {
+                    connection = "scm:git:https://github.com/kazurayam/${project.rootProject.name}.git"
+                    developerConnection = "scm:git:git@github.com:kazurayam/${project.rootProject.name}.git"
+                    url = "https://github.com/kazurayam/${project.rootProject.name}"
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            def releaseRepo = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotRepo = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+            url = isReleaseVersion ? releaseRepo: snapshotRepo
+            credentials {
+                username = project.hasProperty('ossrhUsername') ? ossrhUsername : "Unknown user"
+                password = project.hasProperty('ossrhPassword') ? ossrhPassword : "Unknown password"
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.junit4ks
+}
+// I do not want to sign the SNAPSHOT
+/*
+tasks.withType(Sign) {
+    onlyIf { isReleaseVersion }
+}
+*/

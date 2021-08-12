@@ -18,18 +18,6 @@
       <testCaseId>Test Cases/test/com.kazurayam.junit4ks/JUnitCustomKeywordsTestRuuner</testCaseId>
    </testCaseLink>
    <testCaseLink>
-      <guid>7868d152-6b91-4669-9efa-6c75c673f198</guid>
-      <isReuseDriver>false</isReuseDriver>
-      <isRun>true</isRun>
-      <testCaseId>Test Cases/test/com.kazurayam.ksbackyard/ScreenshotDriverMiniTestRunner</testCaseId>
-   </testCaseLink>
-   <testCaseLink>
-      <guid>0529caf6-d317-4deb-9eae-45f524b29202</guid>
-      <isReuseDriver>false</isReuseDriver>
-      <isRun>true</isRun>
-      <testCaseId>Test Cases/test/junittutorial/ASuiteRunner</testCaseId>
-   </testCaseLink>
-   <testCaseLink>
       <guid>0736147d-16f1-4116-8bf8-83933c0c5874</guid>
       <isReuseDriver>false</isReuseDriver>
       <isRun>true</isRun>

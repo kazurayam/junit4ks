@@ -33,6 +33,34 @@ public class JUnitCustomKeywords {
 	private static final KeywordLogger logger = KeywordLogger.getInstance(JUnitCustomKeywords.class)
 
 	/**
+	 * Run the given <code>junitRunnerClass</code> that is annotated with
+	 * {@link JUnit} runner by invoke JUnit runner.
+	 *
+	 * @param junitRunnerClass a class that is annotated with {@link JUnit} runner.
+	 *
+	 * <p>
+	 * Example of <code>junitRunnerClass</code>:
+	 * <ul>
+	 * <li>
+	 * <pre>
+	 * import org.junit.runner.RunWith
+	 * import org.junit.runners.JUnit4
+	 * &#64;RunWith(JUnit4.class)
+	 * public class MyJunitRunner {}
+	 *
+	 * </pre>
+	 * </li>
+	 * </ul>
+	 * </p>
+	 * @return
+	 */
+	@Keyword
+	public static JUnitRunnerResult runWithJUnitRunner(Class junitRunnerClass) {
+		assert RunConfiguration.getDefaultFailureHandling() != null
+		return runWithJUnitRunner(junitRunnerClass, RunConfiguration.getDefaultFailureHandling())
+	}
+
+	/**
 	 * Example:
 	 *
 	 * You can run the following test case `Test Cases/test/CalculatorTestRunner` in Katalon Studio
@@ -132,98 +160,56 @@ public class JUnitCustomKeywords {
 	@Keyword
 	public static JUnitRunnerResult runWithJUnitRunner(Class junitRunnerClass, FailureHandling flowControl) {
 		return KeywordMain.runKeyword({
+
+			// JUnitCore is a facade for running tests.
 			JUnitCore core = new JUnitCore()
+
+			// set a listener to the core
 			core.addListener(new RunListener4KS())
+
+			// A Computer represents a strategy for computing runners and suites.
 			Computer computer = new Computer()
+
+			// Run all the tests in class.
 			Result result = core.run(computer, junitRunnerClass)
+
+			// wrap up the result as an instance of JUnitRunnerResult
 			boolean runSuccess = result.wasSuccessful()
 			JUnitRunnerResultImpl junitResult = new JUnitRunnerResultImpl(
 					runSuccess ? 'passed' : 'failed', '', result)
+
+			// report the result to console.
 			if (runSuccess) {
-				logger.logPassed(MessageFormat.format("RunWith ''{0}'' was passed", junitRunnerClass.getName()))
+				// if the test ran success, just say it has passed.
+				logger.logPassed(
+						MessageFormat.format("Run for ''{0}'' passed", junitRunnerClass.getName()))
+
 			} else {
+				// if the test failed, show the stacktrace of the failed step
 				List failuresDescriptions = []
 				for (Failure failure: result.getFailures()) {
-					failuresDescriptions.add("\n" + indentLines(failure.getTrace(), "\t") + "\t")
+					failuresDescriptions.add("\n" +
+							formatStackTrace(failure.getTrace(), "\t") + "\t")
 				}
 				KeywordMain.stepFailed(
 						MessageFormat.format("These following reason:\n {0}", failuresDescriptions),
 						flowControl)
 			}
+
 			return junitResult
+
 		}, flowControl, "Keyword runWithJUnitRunner failed")
 	}
 
+
 	/**
 	 * 
-	 * @author urayamakazuaki
-	 *
-	 */
-	private static class RunListener4KS extends RunListener {
-		boolean succeeded
-		public void testStarted(Description description) {
-			logger.startTest(
-					description.getDisplayName(),
-					new HashMap<String, String>(),
-					new Stack<KeywordLogger.KeywordStackElement>())
-			succeeded = true
-		}
-		public void testFailure(Failure failure) {
-			succeeded = false
-			String name =  failure.getDescription().getDisplayName()
-			Throwable t = failure.getException()
-			String stackTraceForThrowable = ExceptionsUtil.getStackTraceForThrowable(t)
-			String message = MessageFormat.format(
-					StringConstants.MAIN_LOG_MSG_FAILED_BECAUSE_OF,
-					name,
-					stackTraceForThrowable)
-			logger.logMessage(ErrorCollector.fromError(t), message, t);
-		}
-		public void testFinished(Description description) {
-			String name =  description.getDisplayName()
-			if (succeeded) {
-				logger.logPassed(name)
-			}
-			logger.endTest(name, new HashMap<String, String>())
-		}
-	}
-
-	/**
-	 * Run the given <code>junitRunnerClass</code> that is annotated with
-	 * {@link JUnit} runner by invoke JUnit runner.
-	 *
-	 * @param junitRunnerClass a class that is annotated with {@link JUnit} runner.
-	 *
-	 * <p>
-	 * Example of <code>junitRunnerClass</code>:
-	 * <ul>
-	 * <li>
-	 * <pre>
-	 * import org.junit.runner.RunWith
-	 * import org.junit.runners.JUnit4
-	 * &#64;RunWith(JUnit4.class)
-	 * public class MyJunitRunner {}
-	 *
-	 * </pre>
-	 * </li>
-	 * </ul>
-	 * </p>
-	 * @return
-	 */
-	@Keyword
-	public static JUnitRunnerResult runWithJUnitRunner(Class junitRunnerClass) {
-		return runWithJUnitRunner(junitRunnerClass, RunConfiguration.getDefaultFailureHandling())
-	}
-
-
-	/**
-	 *
 	 * "aaa\nbbb\nccc" -> "    aaa\n    bbb\n    ccc\n"
 	 *
 	 * @param source
 	 * @return
 	 */
-	static String indentLines(String lines, String indent = '>>  ') {
+	public static String formatStackTrace(String lines, String indent = '>>  ') {
 		StringWriter sw = new StringWriter()
 		BufferedWriter bw = new BufferedWriter(sw)
 		BufferedReader br = new BufferedReader(new StringReader(lines))
@@ -236,75 +222,48 @@ public class JUnitCustomKeywords {
 	}
 
 
-	/**
-	 *
-	 * @author urayamakazuaki
-	 *
-	 */
-	public static interface JUnitRunnerResult {
-
-		/**
-		 * @return passed or failed
-		 */
-		String getStatus()
-
-		/**
-		 * Optional:
-		 * @return absolute path of generated junit report
-		 */
-		String getReportLocation()
-
-		/**
-		 * Optional: Used when the keyword is {@link JUnitCustomKeywords#runWithJUnitRunner(Class)}
-		 * @return an instance of JUnit Result, null if the keyword is NOT
-		 * {@link JUnitBuiltinKeywords#runWithJUnitRunner(Class)}
-		 */
-		Result getJUnitRunnerResult()
-	}
 
 
 	/**
-	 *
-	 * @author urayamakazuaki
+	 * logs various events triggered by JUnitCore class
+	 * into Katalon Studio's Log.
+	 * 
+	 * Consequently you can see "started", "failed" and "finishede" messages 
+	 * in the Katalon Studio's LogViewer.
+	 * 
+	 * @author kazurayam
 	 *
 	 */
-	public static class JUnitRunnerResultImpl implements JUnitRunnerResult {
-		private String status
-		private String reportLocation
-		private Result result
+	private static class RunListener4KS extends RunListener {
 
-		public JUnitRunnerResultImpl(String status, String reportLocation) {
-			this(status, reportLocation, null)
+		boolean succeeded
+
+		public void testStarted(Description description) {
+			logger.startTest(
+					description.getDisplayName(),
+					new HashMap<String, String>(),
+					new Stack<KeywordLogger.KeywordStackElement>())
+			succeeded = true
 		}
 
-		public JUnitRunnerResultImpl(String status, String reportLocation, Result result) {
-			this.status = status
-			this.reportLocation = reportLocation
-			this.result = result
+		public void testFailure(Failure failure) {
+			succeeded = false
+			String name =  failure.getDescription().getDisplayName()
+			Throwable t = failure.getException()
+			String stackTraceForThrowable = ExceptionsUtil.getStackTraceForThrowable(t)
+			String message = MessageFormat.format(
+					StringConstants.MAIN_LOG_MSG_FAILED_BECAUSE_OF,
+					name,
+					stackTraceForThrowable)
+			logger.logMessage(ErrorCollector.fromError(t), message, t);
 		}
 
-		@Override
-		public String getStatus() {
-			return status
-		}
-
-		@Override
-		public String getReportLocation() {
-			return reportLocation
-		}
-
-		@Override
-		public Result getJUnitRunnerResult() {
-			return result
-		}
-
-		@Override
-		public String toString() {
-			return "JUnitRunnerResultImpl{"
-			+ "status: " + status
-			+ ", reportLocation: " + reportLocation
-			+ ", junitRunnerResult: " + (result != null ? result.toString() : "null")
-			+ "}"
+		public void testFinished(Description description) {
+			String name =  description.getDisplayName()
+			if (succeeded) {
+				logger.logPassed(name)
+			}
+			logger.endTest(name, new HashMap<String, String>())
 		}
 	}
 }
