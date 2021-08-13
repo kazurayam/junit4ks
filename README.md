@@ -7,9 +7,6 @@ by kazurayam
 - 3rd release at 10 Feb 2019
 - 4th release at 20 Feb 2019
 
-## API doc
-
-The groovydoc of junit4ks is [here](https://kazurayam.github.io/junit4ks/api/index.html)
 
 ## What is this?
 
@@ -201,3 +198,15 @@ class CalculatorWithIgnoreRestTest {
 
 }
 ```
+
+
+## How to get the jar
+
+The artifact of "junit4ks" project is available at the Maven Central Repository. See
+
+- https://mvnrepository.com/artifact/com.kazurayam/junit4ks
+
+
+## API doc
+
+The groovydoc of junit4ks is [here](https://kazurayam.github.io/junit4ks/api/index.html)
