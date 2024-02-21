@@ -18,7 +18,7 @@ Libs/
 ## I do not want Report to be published
 Reports/
 /bin/
-
+settings/
 tmp/
 
 ## If you want to hide your confidential information,
