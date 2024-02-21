@@ -27,5 +27,6 @@ This enables you to perform test-driven development for your custom keywords.
          </systemFolderConfiguration>
       </systemFolderList>
    </sourceContent>
+   <timeStampInProperties>true</timeStampInProperties>
    <type>GENERIC</type>
 </Project>

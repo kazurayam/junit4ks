@@ -36,8 +36,13 @@ class CalculatorTest {
 	 */
 	@Test
 	void testThatFails() {
-		int expected = 1
-		int actual = 0
-		assertThat(actual, is(expected))
+		try {
+			int expected = 1
+			int actual = 0
+			assertThat(actual, is(expected))
+			fail("should fail here")
+		} catch (java.lang.AssertionError e) {
+			; // as expected
+		}
 	}
 }

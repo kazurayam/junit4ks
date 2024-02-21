@@ -1,3 +1,6 @@
+# mac
+.DS_Store
+
 # emacs
 *~
 
@@ -10,11 +13,13 @@
 \.settings/
 bin/lib/
 Libs/
+.cache/
 
 ## I do not want Report to be published
 Reports/
 /bin/
-
+settings/
+tmp/
 
 ## If you want to hide your confidential information,
 ## uncomment the following line
