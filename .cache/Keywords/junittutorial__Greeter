@@ -1,0 +1,30 @@
+{
+  "keywordFileContentHash": "70B39BB6A5DEBD1B6559DEA99C72D382",
+  "keywordClasses": [
+    {
+      "name": "junittutorial.Greeter",
+      "keywordMethods": [
+        {
+          "name": "greet",
+          "parameters": [
+            {
+              "name": "name",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        }
+      ]
+    }
+  ],
+  "javadocParsed": true
+}

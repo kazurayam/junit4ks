@@ -1,0 +1,10 @@
+{
+  "keywordFileContentHash": "7983042DB116B68F2CB8D5486DFC2048",
+  "keywordClasses": [
+    {
+      "name": "com.kazurayam.junit4ks.RunListener4ks",
+      "keywordMethods": []
+    }
+  ],
+  "javadocParsed": true
+}

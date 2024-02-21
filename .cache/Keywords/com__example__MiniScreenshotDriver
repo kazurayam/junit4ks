@@ -1,0 +1,86 @@
+{
+  "keywordFileContentHash": "0CD2B4CC31C8335F2EE0E703066984B2",
+  "keywordClasses": [
+    {
+      "name": "com.example.MiniScreenshotDriver",
+      "keywordMethods": [
+        {
+          "name": "takeEntirePageImage",
+          "parameters": [
+            {
+              "name": "timeout",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.Integer",
+                "unresolvedClassName": "Integer",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": "/**\n\t * Capture a entire-page screenshot of a web page and return BufferedImage object.\n\t * We get access to the page via the WebDriver object obtained by DriverFactory.getWebDriver()\n\t *\n\t * @timeout millisecond, wait for page to displayed stable after scrolling downward\n\t * @return BufferedImage\n\t */"
+        },
+        {
+          "name": "saveEntirePageImage",
+          "parameters": [
+            {
+              "name": "file",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.io.File",
+                "unresolvedClassName": "File",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "timeout",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.Integer",
+                "unresolvedClassName": "Integer",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": "/**\n\t * Capture a entire-page screenshot of a web page and save PNG image into file.\n\t * We get access to the page via the WebDriver object obtained by DriverFactory.getWebDriver()\n\t *\n\t * @param file output file\n\t * @param timeout millisecond\n\t */"
+        },
+        {
+          "name": "takeEntirePageImage",
+          "parameters": [],
+          "javadoc": ""
+        },
+        {
+          "name": "saveEntirePageImage",
+          "parameters": [
+            {
+              "name": "file",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.io.File",
+                "unresolvedClassName": "File",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        }
+      ]
+    }
+  ],
+  "javadocParsed": true
+}

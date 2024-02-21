@@ -1,12 +1,15 @@
 plugins {
-    id 'java'
+    //id 'java'
     id 'groovy'
-    id 'com.github.johnrengelman.shadow' version '4.0.4'
-    id "com.katalon.gradle-plugin" version "0.0.6"
+    //id 'com.github.johnrengelman.shadow' version '4.0.4'
+    //id "com.katalon.gradle-plugin" version "0.0.6"
 }
 
+group = "com.kazurayam"
+version = "1.6.2"
+
 ext {
-    groovyVersion   = '2.4.7'
+    groovyVersion   = '3.0.17'
 }
 
 configurations {
@@ -14,31 +17,38 @@ configurations {
 }
 
 repositories {
-    jcenter()
     mavenCentral()
+    mavenLocal()
 }
+
 dependencies {
+    implementation fileTree(dir: "Drivers", include:['*.jar'])
+    implementation "org.codehaus.groovy:groovy-all:${groovyVersion}"
+    implementation fileTree(dir: "/Applications/Katalon Studio.app/Contents/Eclipse/plugins", include: ['*.jar'])
+    implementation fileTree(dir: "/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib", include: ['*.jar'])
+
     generateDocs "org.codehaus.groovy:groovy-all:${groovyVersion}"
 }
+
 sourceSets {
     main {
         groovy {
-            srcDirs = ['Keywords', 'Include/scripts/groovy']
-            srcDir 'Libs'
+            srcDirs = ['Keywords', 'Lib']
         }
+    }
+    test {
+         groovy {
+            srcDirs = ['Include/scripts/groovy']
+         }
     }
 }
 
-katalon {
-    dependencyPrefix = "com.kazurayam"
-    minimize = false
-}
-
 task groovydoc(type: Groovydoc, overwrite:true) {
+    group = 'com.kazurayam'
     source = sourceSets.main.groovy
-    classpath = configurations.compile
-    groovyClasspath = project.configurations.generateDocs
-    include 'com/kazurayam/junit4ks/*'
+    classpath = configurations.generateDocs
+    groovyClasspath = configurations.generateDocs
+    include 'com/kazurayam/ks/*'
     exclude '**/*Test.groovy'
 }
 task publishGroovydoc(type: Copy) {

@@ -8,6 +8,7 @@ This enables you to perform test-driven development for your custom keywords.
    <UUID>7f8264c1-803e-409c-88b6-b24a6eb524cc</UUID>
    <migratedVersion>5.9.0</migratedVersion>
    <pageLoadTimeout>0</pageLoadTimeout>
+   <projectFileLocation>/Users/kazuakiurayama/katalon-workspace/junit4ks/junit4ks.prj</projectFileLocation>
    <sourceContent>
       <sourceFolderList>
          <sourceFolderConfiguration>
@@ -26,5 +27,6 @@ This enables you to perform test-driven development for your custom keywords.
          </systemFolderConfiguration>
       </systemFolderList>
    </sourceContent>
+   <timeStampInProperties>true</timeStampInProperties>
    <type>GENERIC</type>
 </Project>

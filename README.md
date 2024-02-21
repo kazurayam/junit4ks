@@ -6,6 +6,7 @@ by kazurayam
 - 2nd release at 13 January 2019
 - 3rd release at 10 Feb 2019
 - 4th release at 20 Feb 2019
+- 5th release v1.6.2 at 21 Feb 2024
 
 ## API doc
 

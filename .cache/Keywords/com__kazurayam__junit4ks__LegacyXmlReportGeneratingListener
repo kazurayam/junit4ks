@@ -1,0 +1,10 @@
+{
+  "keywordFileContentHash": "C83341A816F8C3BCAED4F4124C7AB60B",
+  "keywordClasses": [
+    {
+      "name": "com.kazurayam.junit4ks.LegacyXmlReportGeneratingListener",
+      "keywordMethods": []
+    }
+  ],
+  "javadocParsed": true
+}

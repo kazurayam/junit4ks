@@ -1,7 +1,5 @@
 package com.kazurayam.junit4ks
 
-import java.lang.annotation.*;
-
 import org.junit.Assume;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
