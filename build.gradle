@@ -4,8 +4,8 @@ plugins {
     id 'signing'
 }
 
-group = 'com.kazurayam'
-version = '1.6.1'
+group = "com.kazurayam"
+version = "1.6.2"
 
 def defaultEncoding = 'UTF-8'
 tasks.withType(AbstractCompile).each {it.options.encoding = defaultEncoding }
@@ -13,7 +13,7 @@ tasks.withType(GroovyCompile).each {it.groovyOptions.encoding = defaultEncoding}
 
 ext {
     isReleaseVersion = ! version.endsWith("SNAPSHOT")
-    groovyVersion   = '2.4.21'
+    groovyVersion   = '3.0.17'
 }
 
 configurations {
@@ -22,11 +22,15 @@ configurations {
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
-    implementation fileTree(dir: "/Applications/katalon Studio.app/Contents/Eclipse/plugins", include: ['*.jar'])
+    implementation fileTree(dir: "Drivers", include:['*.jar'])
     implementation "org.codehaus.groovy:groovy-all:${groovyVersion}"
+    implementation fileTree(dir: "/Applications/Katalon Studio.app/Contents/Eclipse/plugins", include: ['*.jar'])
+    implementation fileTree(dir: "/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib", include: ['*.jar'])
+
     generateDocs "org.codehaus.groovy:groovy-all:${groovyVersion}"
 }
 
@@ -38,16 +42,18 @@ sourceSets {
         }
     }
     test {
-        groovy {
+         groovy {
             srcDirs = ['Include/scripts/groovy']
-        }
+         }
     }
 }
 
 task groovydoc(type: Groovydoc, overwrite:true) {
+    group = 'com.kazurayam'
     source = sourceSets.main.groovy
-    groovyClasspath = project.configurations.generateDocs
-    include 'com/kazurayam/junit4ks/*'
+    classpath = configurations.generateDocs
+    groovyClasspath = configurations.generateDocs
+    include 'com/kazurayam/ks/*'
     exclude '**/*Test.groovy'
 }
 task publishGroovydoc(type: Copy) {
@@ -115,8 +121,6 @@ signing {
     sign publishing.publications.junit4ks
 }
 // I do not want to sign the SNAPSHOT
-/*
 tasks.withType(Sign) {
     onlyIf { isReleaseVersion }
 }
-*/

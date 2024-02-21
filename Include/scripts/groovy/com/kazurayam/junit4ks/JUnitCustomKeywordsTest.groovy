@@ -12,9 +12,9 @@ import com.kazurayam.junit4ks.JUnitCustomKeywords
 class JUnitCustomKeywordsTest {
 
 	@Test
-	void test_formatStackTrace() {
+	void testIndentLines() {
 		String expected = "\taaa\n\tbbb\n\tccc\n"
-		String actual = JUnitCustomKeywords.formatStackTrace("aaa\nbbb\nccc\n","\t")
+		String actual = JUnitCustomKeywords.indentLines("aaa\nbbb\nccc\n", "\t")
 		assertThat(actual, is(expected))
 	}
 }
