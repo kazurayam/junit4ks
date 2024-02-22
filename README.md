@@ -46,10 +46,11 @@ runWithJUnitRunner(CalculatorTest.class)
 ### How to run tests
 
 You can run these test cases just as usual Katalon Studio test case.
-![running a test case](docs/images/running_testcase.png)
+![running a test case](https://kazurayam.github.io/junit4ks/images/running_testcase.png)
+
 
 When it finished, you can see the test result output in the Log Viewer and Console in Katalon Studio GUI.
-![testcase execution log](docs/images/testcase_execution_log.png)
+![testcase execution log](https://kazurayam.github.io/junit4ks/images/testcase_execution_log.png)
 
 You may expect a report file in XML will be generated, but unfortunately my `junit4ks` does not do it.
 
