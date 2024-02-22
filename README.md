@@ -17,7 +17,7 @@ The first version was developed in April 2018 using Katalong Studio version 5.4.
 
 This demo will show you how to run JUnit4-based unit tests to verify your Custom Keywords within Katalon Studio.
 
-The 2nd release provides a new Custom Keyword class [`com.kazurayam.ksbackyard.junit.JUnitCustomKeywords`](Keywords/com/kazurayam/ksbackyard/junit/JUnitCustomKeywords.groovy) with a method `runWithJUnitRunner`. Your Test Case can call this method as a usual custom keyword and execute your JUnit-based tests within Katalon Studio.
+The 2nd release provides a custom Keyword class [`com.kazurayam.ksbackyard.junit.JUnitCustomKeywords`](Keywords/com/kazurayam/ksbackyard/junit/JUnitCustomKeywords.groovy) with a method `runWithJUnitRunner`. Your Test Case can call this method as a usual custom keyword and execute your JUnit-based tests within Katalon Studio.
 
 ## Background
 
@@ -82,21 +82,21 @@ Later, 10 Feb 2019, I changed the package name from `com.kazurayam.ksbackyard.ju
 I have made some custom keyword classes. I want to test them using JUnit4:
 - [`junittutorial.Calculator`](Keywords/junittutorial/Calculator.groovy) --- calculator which add/subtract/multiply/divide 2 integers
 - [`junittutorial.Greeter`](Keywords/junittutorial/Greeter.groovy) --- this will say hello to someone you sepecified
-- [`com.example.MiniScreenshotDriver`](Keywords/com/example/MiniScreenshotDriver.groovy) --- taks entire-page screenshot of a URL and save PNG into file
 
 ### Test Cases
 
 I made a few Test Cases in the ordinary `<projectDir>/Test Cases` folder. These test cases run JUnit4 in Katalon Studio.
-- `Scripts/test/CalculatorTest`
+- `Scripts/test/CalculatorTestRunner`
 - `Scripts/test/GreeterTestRunner`
-- `Scripts/test/AllJunittutorialTestsRunner`
-- `Scripts/test/MiniScreenshotDriverTestRunner`
 
-For example, MiniScreenshotDriverTestRunner looks like this:
+For example, the `CalculatorTestRunner` looks like this:
+
 ```
-import com.example.MiniScreenshotDriverTest
+import static com.kazurayam.junit4ks.JUnitCustomKeywords.runWithJUnitRunner
 
-CustomKeywords.'com.kazurayam.junit4ks.JUnitCustomKeywords.runWithJUnitRunner'(MiniScreenshotDriverTest.class)
+import junittutorial.CalculatorTest
+
+runWithJUnitRunner(CalculatorTest.class)
 ```
 
 ### How to run tests
@@ -107,12 +107,14 @@ You can run these test cases just as usual Katalon Studio test case.
 When it finished, you can see the test result output in the Log Viewer and Console in Katalon Studio GUI.
 ![testcase execution log](docs/images/testcase_execution_log.png)
 
+You may expect a report file in XML will be generated, but unfortunately my `junit4ks` does not do it.
+
 ### My JUnit-based tests
 
 I made a few JUnit-based tests. I located them in the `<projectDir>/Include/scripts/groovy` folder.
+
 - [`junittutorial/CalculatorTest.groovy`](Include/scripts/groovy/junittutorial/CalculatorTest.groovy)
 - [`junittutorial/GreeterTest.groovy`](Include/scripts/groovy/junittutorial/GreeterTest.groovy)
-- [`com/example/MiniScreenshotDriverTest.groovy`](Include/scripts/groovy/com/example/MiniScreenshotDriverTest.groovy)
 
 These test classes should be coded just as usual JUnit4 tests. For example, `junittutorial.GreeterTest` looks like this:
 
@@ -149,14 +151,18 @@ I developed this as a mimic of the  [`com.kms.katalon.core.cucumber.keyword.Cucu
 
 ## How to apply this method to your projects
 
-In your Katalon Studio project, do the following:
-1. make a file `Keywords/com/kazurayam/junit4ks/JUnitCustomKeywords.groovy`
-2. Into it, copy and paste the code [`com.kazurayam.junit4ks.JUnitCustomKeywords`](Keywords/com/kazurayam/junit4ks/JUnitCustomKeywords.groovy), save it.
-3. make your JUnit test in `Include/scripts/groovy` folder. It would be something like [`Include/scripts/groovy/junittutorial/CalculatorTest.groovy`](Include/scripts/groovy/junittutorial/CalculatorTest.groovy)
-4. make your Katalon Studio Testcase in `Test Cases` folder. It would be something like [`Test Cases/AllJunittutorialTestsRunner`](Scripts/test/AllJunittutorialTestsRunner/Script1547339195032.groovy)
-5. run your Katalon Studio Testcase by clicking `Run` button in Katalon Studio.
+You can download the latest jar file for
 
->I know, it is terrible copying and pasting *.groovy source into your projects one by one. I want to make the junit4ks installation into your Katalon Studio projects more professional. I will look at [Katalon Plugin Platform](https://forum.katalon.com/t/open-source-katalon-plugin-platform-beta/17248)
+- [GitHub Releases page](https://github.com/kazurayam/junit4ks/releases)
+- [Maven Central recpository](https://mvnrepository.com/artifact/com.kazurayam/junit4ks)
+
+Download the `junit4ks-x.x.x.jar` file and locate it into the `Drivers` folder of your Katalon Studio project.
+
+
+## API doc
+
+The groovydoc of junit4ks is [here](https://kazurayam.github.io/junit4ks/api/index.html)
+
 
 ## @IgnoreRest
 
@@ -199,15 +205,3 @@ class CalculatorWithIgnoreRestTest {
 
 }
 ```
-
-
-## How to get the jar
-
-The artifact of "junit4ks" project is available at the Maven Central Repository. See
-
-- https://mvnrepository.com/artifact/com.kazurayam/junit4ks
-
-
-## API doc
-
-The groovydoc of junit4ks is [here](https://kazurayam.github.io/junit4ks/api/index.html)
