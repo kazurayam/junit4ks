@@ -23,17 +23,23 @@ I wanted to develop a set of Custom Keywords in a Katalon Studio project. See a 
 
 ### Custom Keywords to test
 
-I have made some custom keyword classes. I want to test them using JUnit4:
+I made a custom keyword classe. I want to test this using JUnit4:
+
 - [`junittutorial.Calculator`](Keywords/junittutorial/Calculator.groovy) --- calculator which add/subtract/multiply/divide 2 integers
-- [`junittutorial.Greeter`](Keywords/junittutorial/Greeter.groovy) --- this will say hello to someone you sepecified
 
-### Test Cases
+### JUnit Test classes
 
-I made a few Test Cases in the ordinary `<projectDir>/Test Cases` folder. These test cases run JUnit4 in Katalon Studio.
-- `Scripts/test/CalculatorTestRunner`
-- `Scripts/test/GreeterTestRunner`
+I made a test classe using JUnit4.
 
-For example, the `CalculatorTestRunner` looks like this:
+- [`junittutorial.CalculatorTest`](Include/scripts/groovy/junittutorial/CalculatorTest.groovy)
+
+### Test Runner
+
+I made a Test Case in the `<projectDir>/Test Cases` folder. These test case calls JUnit4, which will run the Test class shown above.
+
+- [`Scripts/test/CalculatorTestRunner`](Scripts/test/junittutorial/CalculatorTestRunner/Script1547192368406.groovy)
+
+The `CalculatorTestRunner` script is as simple as this:
 
 ```
 import static com.kazurayam.junit4ks.JUnitCustomKeywords.runWithJUnitRunner
@@ -43,7 +49,7 @@ import junittutorial.CalculatorTest
 runWithJUnitRunner(CalculatorTest.class)
 ```
 
-### How to run tests
+### How to run the test
 
 You can run these test cases just as usual Katalon Studio test case.
 ![running a test case](https://kazurayam.github.io/junit4ks/images/running_testcase.png)
@@ -54,47 +60,7 @@ When it finished, you can see the test result output in the Log Viewer and Conso
 
 You may expect a report file in XML will be generated, but unfortunately my `junit4ks` does not do it.
 
-### My JUnit-based tests
-
-I made a few JUnit-based tests. I located them in the `<projectDir>/Include/scripts/groovy` folder.
-
-- [`junittutorial/CalculatorTest.groovy`](Include/scripts/groovy/junittutorial/CalculatorTest.groovy)
-- [`junittutorial/GreeterTest.groovy`](Include/scripts/groovy/junittutorial/GreeterTest.groovy)
-
-These test classes should be coded just as usual JUnit4 tests. For example, `junittutorial.GreeterTest` looks like this:
-
-```
-package junittutorial
-
-import static org.hamcrest.CoreMatchers.*
-import static org.junit.Assert.*
-
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
-
-@RunWith(JUnit4.class)
-class GreeterTest {
-
-    @Test
-    void testGreet() {
-        String expected = "Hello, world"
-        String actual = Greeter.greet("world")
-        assertThat(actual, is(expected))
-    }
-}
-```
-
-It's a plain old JUnit test.
-
-### Custom Keyword `runWithJUnitRunner` integrates JUnit with Katalon Studio
-
-`runWithJUnitRunner` keyword enables you to run your tests with JUnit4 in Katalon Studio. See the following source code:
-- [`com.kazurayam.junit4ks.JUnitCustomKeywords`](Keywords/com/kazurayam/junit4ks/JUnitCustomKeywords.groovy)
-
-I developed this as a mimic of the  [`com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords`](https://github.com/katalon-studio/katalon-studio-testing-framework/blob/master/Include/scripts/groovy/com/kms/katalon/core/cucumber/keyword/CucumberBuiltinKeywords.groovy) class.
-
-## How to apply the junit4ks into your projects
+## How to apply the junit4ks into your own Katalon projects
 
 You can download the latest jar file for
 
