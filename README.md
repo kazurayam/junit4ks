@@ -9,17 +9,6 @@ by kazurayam
 - 5th release v1.6.2 at 21 Feb 2024
 
 
-## What is this?
-
-This is a simple [Katalon Studio](https://www.katalon.com/) project for demonstration purpose. You can download the zip file from [Releases](https://github.com/kazurayam/RunningJUnitInKatalonStudio/releases) page, unzip it, open it with your Katalon Studio.
-
-The first version was developed in April 2018 using Katalong Studio version 5.4.2, and later rewritten in January 2019 using version 5.10.1.
-
-This demo will show you how to run JUnit4-based unit tests to verify your Custom Keywords within Katalon Studio.
-
-The 2nd release provides a custom Keyword class [`com.kazurayam.ksbackyard.junit.JUnitCustomKeywords`](Keywords/com/kazurayam/ksbackyard/junit/JUnitCustomKeywords.groovy) with a method `runWithJUnitRunner`. Your Test Case can call this method as a usual custom keyword and execute your JUnit-based tests within Katalon Studio.
-
-
 ## Problem to solve
 
 I wanted to develop a set of Custom Keywords in a Katalon Studio project. See a post in the Katalon Forum: [Taking entire page screenshot using AShot in Katalon Studio](https://forum.katalon.com/t/taking-entire-page-screenshot-using-ashot-in-katalon-studio/12429) for the background story. My custom keywords were expected to be large and complexed, therefore bug-prone. I wanted to execute thorough unit-testing on my Groovy classes using [JUnit4](https://junit.org/junit4/) framework.
