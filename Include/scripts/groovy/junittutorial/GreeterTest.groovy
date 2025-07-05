@@ -1,7 +1,7 @@
 package junittutorial
 
-import static org.hamcrest.CoreMatchers.*
-import static org.junit.Assert.*
+import static org.junit.Assert.assertEquals
+import static org.junit.Assert.fail
 
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -14,7 +14,7 @@ class GreeterTest {
 	void testGreet() {
 		String expected = "Hello, world"
 		String actual = Greeter.greet("world")
-		assertThat(actual, is(expected))
+		assertEquals(actual, expected)
 	}
 
 	/**
@@ -25,7 +25,7 @@ class GreeterTest {
 		try {
 			String expected = "Goodnight, Man"
 			String actual = Greeter.greet("Man")
-			assertThat(actual, is(expected))
+			assertEquals(actual, expected)
 			fail("should fail here")
 		} catch (java.lang.AssertionError e) {
 			;
