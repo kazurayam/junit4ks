@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.kazurayam"
-version = "1.6.2"
+version = "1.6.3"
 
 def defaultEncoding = 'UTF-8'
 tasks.withType(AbstractCompile).each {it.options.encoding = defaultEncoding }
