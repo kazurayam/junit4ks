@@ -33,10 +33,10 @@ class CalculatorTest {
 	}
 
 	/**
-	 * this will fail, intentionally for demonstration purpose
+	 * this test fails but catches it
 	 */
 	@Test
-	void testThatFails() {
+	void testFailAndCatch() {
 		try {
 			int expected = 1
 			int actual = 0

@@ -12,6 +12,13 @@
    <rerunImmediately>false</rerunImmediately>
    <testSuiteGuid>e0b50d27-078a-4808-9d16-ae40d02f42a8</testSuiteGuid>
    <testCaseLink>
+      <guid>157461e7-22dc-4e62-b26c-1a37e7bb22f1</guid>
+      <isReuseDriver>false</isReuseDriver>
+      <isRun>true</isRun>
+      <testCaseId>Test Cases/test/junittutorial/CalculatorFailingTestRunner</testCaseId>
+      <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
+   </testCaseLink>
+   <testCaseLink>
       <guid>848ceedd-c217-4a2c-b6b7-6d9e056f23ec</guid>
       <isReuseDriver>false</isReuseDriver>
       <isRun>true</isRun>
