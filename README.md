@@ -7,6 +7,7 @@ by kazurayam
 - 3rd release at 10 Feb 2019
 - 4th release at 20 Feb 2019
 - 5th release v1.6.2 at 21 Feb 2024
+- 6th release v1.6.3 at July 2025
 
 
 ## Problem to solve
@@ -85,8 +86,7 @@ See `Include/scripts/groovy/junittutorial/CalculatorWithIgnoreRestTest.groovy`:
 ```
 package junittutorial
 
-import static org.hamcrest.CoreMatchers.*
-import static org.junit.Assert.*
+import static org.junit.Assert.assertEquals
 
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -103,16 +103,15 @@ class CalculatorWithIgnoreRestTest {
 	void testMultiply() {
 		int expected = 21
 		int actual = Calculator.multiply(7, 3)
-		assertThat(actual, is(expected))
+		assertEquals(actual, expected)
 	}
 
 	@Test
 	void testDivide_wrongType() {
 		double expected = 1.5f
 		double actual = Calculator.divide(3, 2)
-		assertThat(actual, is(not(expected)))
+		assertNotEquals(actual, expected)
 	}
-
 }
 ```
 

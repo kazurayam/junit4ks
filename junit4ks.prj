@@ -6,7 +6,10 @@ This enables you to perform test-driven development for your custom keywords.
    <name>junit4ks</name>
    <tag></tag>
    <UUID>7f8264c1-803e-409c-88b6-b24a6eb524cc</UUID>
+   <freeLicense>true</freeLicense>
    <migratedVersion>5.9.0</migratedVersion>
+   <modifiedEdition>FREE</modifiedEdition>
+   <modifiedVersion>10.2.3</modifiedVersion>
    <pageLoadTimeout>0</pageLoadTimeout>
    <projectFileLocation>/Users/kazuakiurayama/katalon-workspace/junit4ks/junit4ks.prj</projectFileLocation>
    <sourceContent>
