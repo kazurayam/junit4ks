@@ -1,11 +1,11 @@
 plugins {
     id 'groovy'
-    id 'maven-publish'
-    id 'signing'
+    id 'com.vanniktech.maven.publish' version '0.33.0'
+    // https://github.com/vanniktech/gradle-maven-publish-plugin/blob/main/docs/central.md
 }
 
 group = "com.kazurayam"
-version = "1.6.3"
+version = "1.6.3-SNAPSHOT"
 
 def defaultEncoding = 'UTF-8'
 tasks.withType(AbstractCompile).each {it.options.encoding = defaultEncoding }
@@ -14,6 +14,7 @@ tasks.withType(GroovyCompile).each {it.groovyOptions.encoding = defaultEncoding}
 ext {
     isReleaseVersion = ! version.endsWith("SNAPSHOT")
     groovyVersion   = '3.0.17'
+    GitHubUserName = 'kazurayam'
 }
 
 configurations {
@@ -72,55 +73,42 @@ task sourcesJar(type: Jar) {
     from sourceSets.main.allSource
 }
 
-publishing {
-    publications {
-        junit4ks(MavenPublication) {
-            artifact sourcesJar
-            artifact groovydocJar
-            pom {
-                groupId = project.group
-                name = project.rootProject.name
-                description = 'A Katalon Studio plugin that enables running JUnit4 tests for Custom Keyword classes'
-                url = 'https://kazurayam.github.io/junit4ks/'
-                from components.java
-                licenses {
-                    license {
-                        name = 'The Apache License, Version 2.0'
-                        url = 'https://www.apache.org.licenses/LICENSE-2.0.txt'
-                    }
-                }
-                developers {
-                    developer {
-                        id = 'kazurayam'
-                        name = 'URAYAMA,kazuaki'
-                        email = 'kazuaki.urayama@gmail.com'
-                    }
-                }
-                scm {
-                    connection = "scm:git:https://github.com/kazurayam/${project.rootProject.name}.git"
-                    developerConnection = "scm:git:git@github.com:kazurayam/${project.rootProject.name}.git"
-                    url = "https://github.com/kazurayam/${project.rootProject.name}"
-                }
+import com.vanniktech.maven.publish.SonatypeHost
+mavenPublishing {
+    publishToMavenCentral()
+    signAllPublications()
+    coordinates(project.group, project.rootProject.name, project.version)
+    pom {
+        name.set(project.rootProject.name)
+        description.set('A Katalon Studio plugin that enables running JUnit4 tests for Custom Keyword classes')
+        inceptionYear.set('2019')
+        url.set("https://${GitHubUserName}.github.io/junit4ks/")
+        licenses {
+            license {
+                name.set('The Apache License, Version 2.0')
+                url.set('https://www.apache.org.licenses/LICENSE-2.0.txt')
+                distribution.set('http://www.apache.org/licenses/LICENSE-2.0.txt')
             }
         }
-    }
-    repositories {
-        maven {
-            def releaseRepo = "https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/"
-            def snapshotRepo = "https://ossrh-staging-api.central.sonatype.com/content/repositories/snapshots/"
-            url = isReleaseVersion ? releaseRepo: snapshotRepo
-            credentials {
-                username = project.hasProperty('centralportalUsername') ? centralportalUsername : "Unknown user"
-                password = project.hasProperty('centralportalPassword') ? centralportalPassword : "Unknown password"
+        developers {
+            developer {
+                id.set("${GitHubUserName}")
+                name.set('URAYAMA,kazuaki')
+                url.set("https://github.com/${GitHubUserName}/")
             }
+        }
+        scm {
+            connection = "scm:git:https://github.com/${GitHubUserName}/${project.rootProject.name}.git"
+            developerConnection = "scm:git:git@github.com:${GitHubUserName}/${project.rootProject.name}.git"
+            url = "https://github.com/${GitHubUserName}/${project.rootProject.name}"
         }
     }
 }
-
-signing {
-    sign publishing.publications.junit4ks
-}
-// I do not want to sign the SNAPSHOT
-tasks.withType(Sign) {
-    onlyIf { isReleaseVersion }
-}
+/*
+ * ~/.gradle/gradle.properites should contain the following properites:
+mavenCentralUsername=your-username
+mavenCentralPassword=your-password
+signing.keyId=12345678
+signing.password=some_password
+signing.secretKeyRingFile=/Users/yourusername/.gnupg/secring.gpg
+ */
