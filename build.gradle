@@ -39,12 +39,18 @@ sourceSets {
     main {
         groovy {
             srcDirs = ['Keywords', 'Libs']
-            excludes = ['CustomKeywords.groovy', "Temp*.groovy"]
+            excludes = ['**/CustomKeywords.groovy',
+                "**/Temp*.groovy",
+                "internal/**",
+                "junittutorial/**",
+                "katalon-plugin.json"
+                ]
         }
     }
     test {
          groovy {
             srcDirs = ['Include/scripts/groovy']
+            excludes = ['junittutorial/**', '**/Temp*.groovy']
          }
     }
 }
