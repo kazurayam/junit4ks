@@ -1,15 +1,11 @@
 plugins {
     id 'groovy'
-    id 'com.vanniktech.maven.publish' version '0.33.0'
+    id 'com.vanniktech.maven.publish' version '0.34.0'
     // https://github.com/vanniktech/gradle-maven-publish-plugin/blob/main/docs/central.md
 }
 
 group = "com.kazurayam"
 version = "1.6.3-SNAPSHOT"
-
-def defaultEncoding = 'UTF-8'
-tasks.withType(AbstractCompile).each {it.options.encoding = defaultEncoding }
-tasks.withType(GroovyCompile).each {it.groovyOptions.encoding = defaultEncoding}
 
 ext {
     isReleaseVersion = ! version.endsWith("SNAPSHOT")
@@ -24,6 +20,15 @@ configurations {
 repositories {
     mavenCentral()
     mavenLocal()
+
+    maven {
+        name = 'Central Portal Snapshots'
+        url = 'https://central.sonatype.com/repository/maven-snapshots/'
+        // Only search this repository for the specific dependency
+        content {
+            includeModule(project.group, project.rootProject.name)
+        }
+    }
 }
 
 dependencies {
@@ -31,7 +36,6 @@ dependencies {
     implementation "org.codehaus.groovy:groovy-all:${groovyVersion}"
     implementation fileTree(dir: "/Applications/Katalon Studio.app/Contents/Eclipse/plugins", include: ['*.jar'])
     implementation fileTree(dir: "/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib", include: ['*.jar'])
-
     generateDocs "org.codehaus.groovy:groovy-all:${groovyVersion}"
 }
 
@@ -55,34 +59,12 @@ sourceSets {
     }
 }
 
-task groovydoc(type: Groovydoc, overwrite:true) {
-    group = 'com.kazurayam'
-    source = sourceSets.main.groovy
-    classpath = configurations.generateDocs
-    groovyClasspath = configurations.generateDocs
-    include 'com/kazurayam/ks/*'
-    exclude '**/*Test.groovy'
-}
-task publishGroovydoc(type: Copy) {
-    from 'build/docs/groovydoc'
-    into 'docs/api'
-}
-groovydoc.finalizedBy publishGroovydoc
 
-task groovydocJar(type: Jar) {
-    archiveClassifier = 'javadoc'
-    from groovydoc
-}
-
-task sourcesJar(type: Jar) {
-    archiveClassifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-import com.vanniktech.maven.publish.SonatypeHost
+//import com.vanniktech.maven.publish.SonatypeHost
 mavenPublishing {
     publishToMavenCentral()
     signAllPublications()
+
     coordinates(project.group, project.rootProject.name, project.version)
     pom {
         name.set(project.rootProject.name)
@@ -118,3 +100,27 @@ signing.keyId=12345678
 signing.password=some_password
 signing.secretKeyRingFile=/Users/yourusername/.gnupg/secring.gpg
  */
+
+task groovydoc(type: Groovydoc, overwrite:true) {
+    group = 'com.kazurayam'
+    source = sourceSets.main.groovy
+    classpath = configurations.generateDocs
+    groovyClasspath = configurations.generateDocs
+    include 'com/kazurayam/ks/*'
+    exclude '**/*Test.groovy'
+}
+task publishGroovydoc(type: Copy) {
+    from 'build/docs/groovydoc'
+    into 'docs/api'
+}
+groovydoc.finalizedBy publishGroovydoc
+
+task groovydocJar(type: Jar) {
+    archiveClassifier = 'javadoc'
+    from groovydoc
+}
+
+task sourcesJar(type: Jar) {
+    archiveClassifier = 'sources'
+    from sourceSets.main.allSource
+}
