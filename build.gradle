@@ -8,7 +8,6 @@ group = "com.kazurayam"
 version = "1.6.3-SNAPSHOT"
 
 ext {
-    isReleaseVersion = ! version.endsWith("SNAPSHOT")
     groovyVersion   = '3.0.17'
     GitHubUserName = 'kazurayam'
 }
@@ -20,15 +19,6 @@ configurations {
 repositories {
     mavenCentral()
     mavenLocal()
-
-    maven {
-        name = 'Central Portal Snapshots'
-        url = 'https://central.sonatype.com/repository/maven-snapshots/'
-        // Only search this repository for the specific dependency
-        content {
-            includeModule(project.group, project.rootProject.name)
-        }
-    }
 }
 
 dependencies {
@@ -59,13 +49,14 @@ sourceSets {
     }
 }
 
-
-//import com.vanniktech.maven.publish.SonatypeHost
 mavenPublishing {
     publishToMavenCentral()
     signAllPublications()
 
-    coordinates(project.group, project.rootProject.name, project.version)
+    coordinates(project.group,              // com.kazurayam
+                project.rootProject.name,   // junit4ks
+                project.version)            // e.g, g1.6.3 or 1.6.3-SNAPSHOT
+
     pom {
         name.set(project.rootProject.name)
         description.set('A Katalon Studio plugin that enables running JUnit4 tests for Custom Keyword classes')
