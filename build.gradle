@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.kazurayam"
-version = "1.6.3-SNAPSHOT"
+version = "1.6.3"
 
 ext {
     groovyVersion   = '3.0.17'
