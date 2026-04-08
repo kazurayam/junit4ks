@@ -1,4 +1,4 @@
-:PAGES_URL: https://kaurayam.github.io/junit4ks
+:PAGES_URL: https://kazurayam.github.io/junit4ks
 :REPOS_URL: https://github.com/kazurayam/junit4ks/tree/develop
 
 = Running JUnit 4 in Katalon Studio

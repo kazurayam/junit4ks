@@ -110,7 +110,7 @@ The files under the `Test Cases`, `Scripts`, `Test Suite` and `Include` director
 
 Close and reopen your Katalon Studio project in which the `junit4ks` files have been injected.
 
-![project injected](https://kaurayam.github.io/junit4ks/images/project_with_junit4ks_injected.png)
+![project injected](https://kazurayam.github.io/junit4ks/images/project_with_junit4ks_injected.png)
 
 Open the `Test Suites/test/junittutorial/runAll`. Runt it by clicking the gree button ![green button](https://kazurayam.github.io/junit4ks/images/run_katalon_test.png). The Test Suite would pass.
 
