@@ -22,15 +22,15 @@ I wanted to develop a set of Custom Keywords in a Katalon Studio project. For th
 
 ## Solution
 
-Unfortunately, Katalon Studio does not offer a toolset to do unit-testing by JUnit for custom Keywords. Therefore I invent a framework for myself.
+Unfortunately, Katalon Studio does not offer a toolset to do unit-testing for custom Keywords. Therefore I will invent a framework for myself.
 
 ## How to inject the Junit4ks files into your own Katlaon project
 
-1.  Here I assume you have a Katalon Studio project adlready created. Any project will do.
+1.  Here I assume you have a Katalon Studio project already created. Any project will do.
 
-2.  Visit the [Releases v1.6.3](https://github.com/kazurayam/junit4ks/releases/tag/1.6.3) page. Locate the link `injectJunit4ks-build.gradle`. Download the file into the project’s root directory.
+2.  Visit the [Releases v1.6.3](https://github.com/kazurayam/junit4ks/releases/tag/1.6.3) page. Locate the link `injectJunit4ks-build.gradle`. Download the file into your project’s root directory.
 
-3.  You need to renamed the `injectJunit4ks-build.gradle` file to `build.gradle`.
+3.  You need to rename the `injectJunit4ks-build.gradle` file to `build.gradle`.
 
 4.  In a Terminal window, you want to do the following operation in the command line:
 
@@ -39,13 +39,13 @@ Unfortunately, Katalon Studio does not offer a toolset to do unit-testing by JUn
     $ cd <yourProjecDir>
     $ gradle injectJunit4ks
 
-1.  The `injectJunit4ks` task will unzip the archive and copy the `Keywords` and others into your own Katalon Studio project.
+1.  The `injectJunit4ks` task will unzip the archive and copy the contained files into your own Katalon Studio project.
 
-2.  Once the zip’s contet files are extracted and injected into your project, the `build.gradle` is no longer needed. You should remove the `build.gradle` file.
+2.  Once the zip’s content files have been extracted and injected into your project, the `build.gradle` is no longer needed. You should remove the `build.gradle` file.
 
 ## What’s in the zip file
 
-In your own Katalon Studio project directory, you would find a new file created at:
+In your own Katalon Studio project directory, you would find a new file created in the `build` directory:
 
     $ pwd
     $ <yourProjectDir>
@@ -54,7 +54,7 @@ In your own Katalon Studio project directory, you would find a new file created 
     ├── dist-downloaded
     │   └── junit4ks-distribution-1.6.3.zip
 
-The zip file contains the following contents:
+The zip file contains the following file tree:
 
     $ tree .
     .
@@ -112,12 +112,13 @@ Close and reopen your Katalon Studio project in which the `junit4ks` files have 
 
 ![project injected](https://kazurayam.github.io/junit4ks/images/project_with_junit4ks_injected.png)
 
-Open the `Test Suites/test/junittutorial/runAll`. Runt it by clicking the gree button ![green button](https://kazurayam.github.io/junit4ks/images/run_katalon_test.png). The Test Suite would pass.
+Open the `Test Suites/test/junittutorial/runAll`. Run it it by clicking the green button ![green button](https://kazurayam.github.io/junit4ks/images/run_katalon_test.png). The Test Suite would pass.
 
-When it finished, you can see the test result output in the Log Viewer and Console in Katalon Studio GUI.
+When it finished, you can see the test result output in the Log Viewer and Console in Katalon Studio GUI. When any test fails, a Java StackTrace will be printed into the Log Viewer.
+
 ![testcase execution log](https://kazurayam.github.io/junit4ks/images/testcase_execution_log.png)
 
-When any test fails, a Java Stack Trace will be printed into the Log Viewer. You may expect a report file in XML will be generated, but unfortunately my junit4ks does not do it.
+    You may expect a nicely-formatted report in HTML to be generated, but unfortunately my junit4ks does not do it. In fact, I don't need it.
 
 ## Source codes
 
@@ -129,7 +130,7 @@ Have a look at the following sample codes.
 
 - [Keywords/junittutorial/Calculator.groovy](https://github.com/kazurayam/junit4ks/tree/develop/Keywords/junittutorial/Calculator.groovy)
 
-The `Calculator.groovy` is the target class to be unit-tested. The `CalculatorTest.groovy` does unit-tests for the custom class. You can run the test by running the `CalcluratorTestRunner` in Katalon Studio GUI by clicking the ordinary green button ![green button](https://kazurayam.github.io/junit4ks/images/run_katalon_test.png).
+The `Calculator.groovy` is the target class to be unit-tested. The `CalculatorTest.groovy` carries out unit-tests for the custom class. You can run the test by running the `CalcluratorTestRunner` in Katalon Studio GUI by clicking the ordinary green button ![green button](https://kazurayam.github.io/junit4ks/images/run_katalon_test.png).
 
 ## API doc
 
