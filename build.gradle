@@ -2,6 +2,7 @@ plugins {
     id 'groovy'
     id 'com.vanniktech.maven.publish' version '0.34.0'
     // https://github.com/vanniktech/gradle-maven-publish-plugin/blob/main/docs/central.md
+    id "de.undercouch.download" version "5.7.0"
 }
 
 group = "com.kazurayam"
@@ -10,6 +11,7 @@ version = "1.6.3"
 ext {
     groovyVersion   = '3.0.17'
     GitHubUserName = 'kazurayam'
+    DISTRIBUTION_FILE_NAME = "${project.rootProject.name}-distribution-${project.version}.zip"
 }
 
 configurations {
@@ -55,7 +57,7 @@ mavenPublishing {
 
     coordinates(project.group,              // com.kazurayam
                 project.rootProject.name,   // junit4ks
-                project.version)            // e.g, g1.6.3 or 1.6.3-SNAPSHOT
+                project.version)            // e.g 1.6.3 or 1.6.3-SNAPSHOT
 
     pom {
         name.set(project.rootProject.name)
@@ -114,4 +116,51 @@ task groovydocJar(type: Jar) {
 task sourcesJar(type: Jar) {
     archiveClassifier = 'sources'
     from sourceSets.main.allSource
+}
+
+
+
+
+tasks.register('createDist', Task) {
+    dependsOn tasks.createArchive, tasks.createInjectionScript
+}
+
+tasks.register('createArchive', Zip) {
+    archiveFileName="${DISTRIBUTION_FILE_NAME}"
+    destinationDirectory = file('build/dist-created')
+    from('.') {
+        include 'Include/scripts/groovy/junittutorial/Calculator*Test.groovy'
+        include 'Keywords/com/kazurayam/junit4ks/*.groovy'
+        include 'Keywords/junittutorial/Calculator.groovy'
+        include 'Scripts/test/junittutorial/CalculatorFailingTestRunner/*.groovy'
+        include 'Scripts/test/junittutorial/CalculatorTestRunner/*.groovy'
+        include 'Scripts/test/junittutorial/CalculatorTestWithIgnoreRestRunner/*.groovy'
+        include 'Test Cases/test/junittutorial/Calculator*.tc'
+        include 'Test Suites/test/junittutorial/*'
+    }
+}
+
+tasks.register('createInjectionScript', Task) {
+    doFirst {
+        def text = """
+plugins {
+    id "de.undercouch.download" version "5.7.0"
+}
+task injectJunit4ks {
+    doLast {
+        download.run {
+            src "https://github.com/kazurayam/junit4ks/releases/download/${project.version}/${DISTRIBUTION_FILE_NAME}"
+            dest layout.buildDirectory.dir('dist-downloaded')
+            overwrite true
+        }
+        copy {
+            from zipTree(layout.buildDirectory.file("dist-downloaded/${DISTRIBUTION_FILE_NAME}"))
+            into layout.projectDirectory.dir('.')
+        }
+    }
+}
+"""
+        def file = file('build/dist-created/injectJunit4ks-build.gradle')
+        file.text = text
+    }
 }
