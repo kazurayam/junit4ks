@@ -117,9 +117,7 @@ Open the `Test Suites/test/junittutorial/runAll`. Runt it by clicking the gree b
 When it finished, you can see the test result output in the Log Viewer and Console in Katalon Studio GUI.
 ![testcase execution log](https://kazurayam.github.io/junit4ks/images/testcase_execution_log.png)
 
-When any test fails, a Java Stack Trace will be printed into the Log Viewer.
-
-The output into the Log Viewer is the sole output from the junit4ks. It will not generate any beautifully formated reports.
+When any test fails, a Java Stack Trace will be printed into the Log Viewer. You may expect a report file in XML will be generated, but unfortunately my junit4ks does not do it.
 
 ## Source codes
 
