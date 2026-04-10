@@ -28,16 +28,37 @@ Unfortunately, Katalon Studio does not offer a toolset to do unit-testing for cu
 
 1.  Here I assume you have a Katalon Studio project already created. Any project will do.
 
-2.  Visit the [Releases v1.6.3](https://github.com/kazurayam/junit4ks/releases/tag/1.6.3) page. Locate the link `injectJunit4ks-build.gradle`. Download the file into your project’s root directory.
+2.  Visit the [Releases v1.6.3](https://github.com/kazurayam/junit4ks/releases/tag/1.6.3) page. Locate the link `injectJunit4ks-build.gradle`. Download the file into your project’s root directory. The file has the following script:
 
-3.  You need to rename the `injectJunit4ks-build.gradle` file to `build.gradle`.
+<!-- -->
 
-4.  In a Terminal window, you want to do the following operation in the command line:
+    plugins {
+        id "de.undercouch.download" version "5.7.0"
+    }
+    task injectJunit4ks {
+        doLast {
+            download.run {
+                src "https://github.com/kazurayam/junit4ks/releases/download/1.6.3/junit4ks-distribution-1.6.3.zip"
+                dest layout.buildDirectory.dir('dist-downloaded')
+                overwrite true
+            }
+            copy {
+                from zipTree(layout.buildDirectory.file("dist-downloaded/junit4ks-distribution-1.6.3.zip"))
+                into layout.projectDirectory.dir('.')
+            }
+        }
+    }
+
+1.  You need to rename the `injectJunit4ks-build.gradle` file to `build.gradle`.
+
+2.  In a Terminal window, you want to do the following operation in the command line:
 
 <!-- -->
 
     $ cd <yourProjecDir>
     $ gradle injectJunit4ks
+
+Obviously here I assume you have the [Gradle build tool](https://gradle.org/) is installed and operational in your environment.
 
 1.  The `injectJunit4ks` task will unzip the archive and copy the contained files into your own Katalon Studio project.
 
