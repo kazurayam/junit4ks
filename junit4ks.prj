@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Project>
-   <description>A custom keyword that run JUnit4 in Katalon Studio. 
+   <description>A custom keyword that run JUnit4 in Katalon Studio.
+
 This enables you to perform test-driven development for your custom keywords.
 </description>
    <name>junit4ks</name>
@@ -8,8 +9,8 @@ This enables you to perform test-driven development for your custom keywords.
    <UUID>7f8264c1-803e-409c-88b6-b24a6eb524cc</UUID>
    <freeLicense>true</freeLicense>
    <migratedVersion>5.9.0</migratedVersion>
-   <modifiedEdition>FREE</modifiedEdition>
-   <modifiedVersion>10.2.3</modifiedVersion>
+   <modifiedEdition>ENTERPRISE</modifiedEdition>
+   <modifiedVersion>10.4.2</modifiedVersion>
    <pageLoadTimeout>0</pageLoadTimeout>
    <projectFileLocation>/Users/kazuakiurayama/katalon-workspace/junit4ks/junit4ks.prj</projectFileLocation>
    <sourceContent>

@@ -1,19 +1,17 @@
 plugins {
     id 'groovy'
-    id 'maven-publish'
-    id 'signing'
+    id 'com.vanniktech.maven.publish' version '0.34.0'
+    // https://github.com/vanniktech/gradle-maven-publish-plugin/blob/main/docs/central.md
+    id "de.undercouch.download" version "5.7.0"
 }
 
 group = "com.kazurayam"
 version = "1.6.3"
 
-def defaultEncoding = 'UTF-8'
-tasks.withType(AbstractCompile).each {it.options.encoding = defaultEncoding }
-tasks.withType(GroovyCompile).each {it.groovyOptions.encoding = defaultEncoding}
-
 ext {
-    isReleaseVersion = ! version.endsWith("SNAPSHOT")
     groovyVersion   = '3.0.17'
+    GitHubUserName = 'kazurayam'
+    DISTRIBUTION_FILE_NAME = "${project.rootProject.name}-distribution-${project.version}.zip"
 }
 
 configurations {
@@ -30,7 +28,6 @@ dependencies {
     implementation "org.codehaus.groovy:groovy-all:${groovyVersion}"
     implementation fileTree(dir: "/Applications/Katalon Studio.app/Contents/Eclipse/plugins", include: ['*.jar'])
     implementation fileTree(dir: "/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib", include: ['*.jar'])
-
     generateDocs "org.codehaus.groovy:groovy-all:${groovyVersion}"
 }
 
@@ -38,15 +35,64 @@ sourceSets {
     main {
         groovy {
             srcDirs = ['Keywords', 'Libs']
-            excludes = ['CustomKeywords.groovy', "Temp*.groovy"]
+            excludes = ['**/CustomKeywords.groovy',
+                "**/Temp*.groovy",
+                "internal/**",
+                "junittutorial/**",
+                "katalon-plugin.json"
+                ]
         }
     }
     test {
          groovy {
             srcDirs = ['Include/scripts/groovy']
+            excludes = ['junittutorial/**', '**/Temp*.groovy']
          }
     }
 }
+
+mavenPublishing {
+    publishToMavenCentral()
+    signAllPublications()
+
+    coordinates(project.group,              // com.kazurayam
+                project.rootProject.name,   // junit4ks
+                project.version)            // e.g 1.6.3 or 1.6.3-SNAPSHOT
+
+    pom {
+        name.set(project.rootProject.name)
+        description.set('A Katalon Studio plugin that enables running JUnit4 tests for Custom Keyword classes')
+        inceptionYear.set('2019')
+        url.set("https://${GitHubUserName}.github.io/junit4ks/")
+        licenses {
+            license {
+                name.set('The Apache License, Version 2.0')
+                url.set('https://www.apache.org.licenses/LICENSE-2.0.txt')
+                distribution.set('http://www.apache.org/licenses/LICENSE-2.0.txt')
+            }
+        }
+        developers {
+            developer {
+                id.set("${GitHubUserName}")
+                name.set('URAYAMA,kazuaki')
+                url.set("https://github.com/${GitHubUserName}/")
+            }
+        }
+        scm {
+            connection = "scm:git:https://github.com/${GitHubUserName}/${project.rootProject.name}.git"
+            developerConnection = "scm:git:git@github.com:${GitHubUserName}/${project.rootProject.name}.git"
+            url = "https://github.com/${GitHubUserName}/${project.rootProject.name}"
+        }
+    }
+}
+/*
+ * ~/.gradle/gradle.properites should contain the following properites:
+mavenCentralUsername=your-username
+mavenCentralPassword=your-password
+signing.keyId=12345678
+signing.password=some_password
+signing.secretKeyRingFile=/Users/yourusername/.gnupg/secring.gpg
+ */
 
 task groovydoc(type: Groovydoc, overwrite:true) {
     group = 'com.kazurayam'
@@ -72,55 +118,49 @@ task sourcesJar(type: Jar) {
     from sourceSets.main.allSource
 }
 
-publishing {
-    publications {
-        junit4ks(MavenPublication) {
-            artifact sourcesJar
-            artifact groovydocJar
-            pom {
-                groupId = project.group
-                name = project.rootProject.name
-                description = 'A Katalon Studio plugin that enables running JUnit4 tests for Custom Keyword classes'
-                url = 'https://kazurayam.github.io/junit4ks/'
-                from components.java
-                licenses {
-                    license {
-                        name = 'The Apache License, Version 2.0'
-                        url = 'https://www.apache.org.licenses/LICENSE-2.0.txt'
-                    }
-                }
-                developers {
-                    developer {
-                        id = 'kazurayam'
-                        name = 'URAYAMA,kazuaki'
-                        email = 'kazuaki.urayama@gmail.com'
-                    }
-                }
-                scm {
-                    connection = "scm:git:https://github.com/kazurayam/${project.rootProject.name}.git"
-                    developerConnection = "scm:git:git@github.com:kazurayam/${project.rootProject.name}.git"
-                    url = "https://github.com/kazurayam/${project.rootProject.name}"
-                }
-            }
-        }
-    }
-    repositories {
-        maven {
-            def releaseRepo = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-            def snapshotRepo = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
-            url = isReleaseVersion ? releaseRepo: snapshotRepo
-            credentials {
-                username = project.hasProperty('ossrhUsername') ? ossrhUsername : "Unknown user"
-                password = project.hasProperty('ossrhPassword') ? ossrhPassword : "Unknown password"
-            }
-        }
+
+
+
+tasks.register('createDist', Task) {
+    dependsOn tasks.createArchive, tasks.createInjectionScript
+}
+
+tasks.register('createArchive', Zip) {
+    archiveFileName="${DISTRIBUTION_FILE_NAME}"
+    destinationDirectory = file('build/dist-created')
+    from('.') {
+        include 'Include/scripts/groovy/junittutorial/Calculator*Test.groovy'
+        include 'Keywords/com/kazurayam/junit4ks/*.groovy'
+        include 'Keywords/junittutorial/Calculator.groovy'
+        include 'Scripts/test/junittutorial/CalculatorFailingTestRunner/*.groovy'
+        include 'Scripts/test/junittutorial/CalculatorTestRunner/*.groovy'
+        include 'Scripts/test/junittutorial/CalculatorTestWithIgnoreRestRunner/*.groovy'
+        include 'Test Cases/test/junittutorial/Calculator*.tc'
+        include 'Test Suites/test/junittutorial/*'
     }
 }
 
-signing {
-    sign publishing.publications.junit4ks
+tasks.register('createInjectionScript', Task) {
+    doFirst {
+        def text = """
+plugins {
+    id "de.undercouch.download" version "5.7.0"
 }
-// I do not want to sign the SNAPSHOT
-tasks.withType(Sign) {
-    onlyIf { isReleaseVersion }
+task injectJunit4ks {
+    doLast {
+        download.run {
+            src "https://github.com/kazurayam/junit4ks/releases/download/${project.version}/${DISTRIBUTION_FILE_NAME}"
+            dest layout.buildDirectory.dir('dist-downloaded')
+            overwrite true
+        }
+        copy {
+            from zipTree(layout.buildDirectory.file("dist-downloaded/${DISTRIBUTION_FILE_NAME}"))
+            into layout.projectDirectory.dir('.')
+        }
+    }
+}
+"""
+        def file = file('build/dist-created/injectJunit4ks-build.gradle')
+        file.text = text
+    }
 }
